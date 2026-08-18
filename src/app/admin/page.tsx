@@ -1,76 +1,139 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { ShieldAlert, Users, Trash2, Plus } from "lucide-react";
 import Link from "next/link";
+import { Header } from "@/components/Header";
+import { BottomDock } from "@/components/BottomDock";
+import { DECKS, DeckData, SEALED_PRODUCTS } from "@/data/decks";
+import { useAuth } from "@/contexts/AuthContext";
+import { ShieldCheck, UserCheck, Package, RefreshCw, CheckCircle2, ArrowLeft } from "lucide-react";
 
 export default function AdminPage() {
-  const { isAdmin, associatedMembers, addAssociatedMember, removeAssociatedMember } = useAuth();
-  const [newEmail, setNewEmail] = useState("");
+  const { isAdmin } = useAuth();
+  const [deckStatuses, setDeckStatuses] = useState<{ [id: string]: string }>({
+    charizard: "Disponibile",
+    gardevoir: "Disponibile",
+    dragapult: "In Prestito",
+    ragingbolt: "Disponibile",
+    lugia: "Disponibile",
+    miraidon: "Disponibile",
+  });
 
-  if (!isAdmin) {
-    return (
-      <div className="container mx-auto px-4 py-32 text-center max-w-2xl">
-        <ShieldAlert size={64} className="mx-auto text-red-500 mb-6" />
-        <h1 className="text-3xl font-bold text-[#2d3748] mb-4">Accesso Negato</h1>
-        <p className="text-gray-600 mb-8">Questa pagina è riservata esclusivamente agli amministratori.</p>
-        <Link href="/" className="text-blue-500 font-bold hover:underline">Torna alla Home</Link>
-      </div>
-    );
-  }
-
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newEmail) {
-      addAssociatedMember(newEmail);
-      setNewEmail("");
-    }
+  const toggleStatus = (id: string) => {
+    const current = deckStatuses[id] || "Disponibile";
+    const next =
+      current === "Disponibile"
+        ? "In Prestito"
+        : current === "In Prestito"
+        ? "In Manutenzione"
+        : "Disponibile";
+    setDeckStatuses((prev) => ({ ...prev, [id]: next }));
   };
 
   return (
-    <div className="container mx-auto px-4 py-16 max-w-4xl">
-      <h1 className="text-4xl font-nunito font-extrabold text-[#2d3748] mb-8">Pannello di Amministrazione</h1>
-      
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-        <div className="flex items-center gap-3 mb-6">
-          <Users className="text-blue-500" size={28} />
-          <h2 className="text-2xl font-bold text-[#2d3748]">Gestione Soci (Membri Associati)</h2>
-        </div>
+    <div className="min-h-screen flex flex-col pb-28">
+      <Header />
 
-        <form onSubmit={handleAdd} className="flex gap-4 mb-8">
-          <input 
-            type="email" 
-            placeholder="Email del nuovo socio (es. utente@gmail.com)"
-            value={newEmail}
-            onChange={(e) => setNewEmail(e.target.value)}
-            className="flex-grow px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500"
-            required
-          />
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold transition-colors flex items-center gap-2">
-            <Plus size={20} /> Aggiungi
-          </button>
-        </form>
+      <main className="flex-grow max-w-4xl mx-auto w-full px-3.5 sm:px-6 py-4 space-y-6">
+        
+        {/* Top Breadcrumb */}
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-amber-300 hover:text-white transition-colors"
+        >
+          <ArrowLeft size={14} />
+          <span>Torna alla Home</span>
+        </Link>
 
-        <div className="space-y-4">
-          {associatedMembers.length === 0 ? (
-            <p className="text-gray-500">Nessun membro associato attualmente registrato.</p>
-          ) : (
-            associatedMembers.map((email) => (
-              <div key={email} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
-                <span className="font-bold text-gray-700">{email}</span>
-                <button 
-                  onClick={() => removeAssociatedMember(email)}
-                  className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-full transition-colors"
-                  title="Rimuovi socio"
+        {/* Header Hero */}
+        <section className="binder-card rounded-3xl p-5 sm:p-8 space-y-3 gold-border gold-glow">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="text-purple-400" size={24} />
+            <span className="text-[10px] font-mono text-purple-300 font-bold uppercase tracking-wider">
+              Pannello Gestione Associazione
+            </span>
+          </div>
+
+          <h1 className="font-cinzel font-bold text-2xl sm:text-4xl text-white leading-tight">
+            Deck & Member Manager
+          </h1>
+
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Monitora lo stato di prestito dei 6 mazzi fisici durante le serate al Comala, le presenze dei soci e le scorte di prodotti sigillati.
+          </p>
+        </section>
+
+        {/* Live Deck Loan Status Tracker */}
+        <section className="binder-card rounded-2xl p-5 space-y-4 border border-[#d4af37]/30">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+            <h2 className="font-cinzel font-bold text-base sm:text-lg text-white">
+              Stato Mazzi Fisici al Bancone
+            </h2>
+            <span className="text-xs font-mono text-slate-400">Clicca per cambiare stato</span>
+          </div>
+
+          <div className="space-y-2.5">
+            {DECKS.map((deck) => {
+              const status = deckStatuses[deck.id] || "Disponibile";
+              const isAvailable = status === "Disponibile";
+              const isLoaned = status === "In Prestito";
+
+              return (
+                <div
+                  key={deck.id}
+                  className="bg-black/50 p-3.5 rounded-xl border border-white/5 flex items-center justify-between gap-3 text-xs"
                 >
-                  <Trash2 size={20} />
-                </button>
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-amber-300 font-bold">{deck.foilNumber}</span>
+                    <div>
+                      <h4 className="font-bold text-white text-xs sm:text-sm">{deck.title}</h4>
+                      <span className="text-[10px] text-slate-400 font-mono">{deck.type}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => toggleStatus(deck.id)}
+                    className={`font-mono text-xs font-bold px-3 py-1.5 rounded-lg border transition-all tap-press ${
+                      isAvailable
+                        ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30"
+                        : isLoaned
+                        ? "bg-amber-500/20 text-amber-300 border-amber-500/30 hover:bg-amber-500/30"
+                        : "bg-red-500/20 text-red-300 border-red-500/30 hover:bg-red-500/30"
+                    }`}
+                  >
+                    {status} ⟳
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Sealed Products Stock Tracker */}
+        <section className="binder-card rounded-2xl p-5 space-y-3">
+          <div className="flex items-center gap-2 border-b border-white/10 pb-2">
+            <Package className="text-[#d4af37]" size={18} />
+            <h2 className="font-cinzel font-bold text-base sm:text-lg text-white">
+              Giacenza Box & Bustine per Soci
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            {SEALED_PRODUCTS.map((prod) => (
+              <div key={prod.id} className="bg-black/50 p-3 rounded-xl border border-white/5 space-y-1">
+                <h4 className="font-bold text-white text-xs">{prod.name}</h4>
+                <div className="flex justify-between text-slate-400 font-mono text-[11px] pt-1">
+                  <span>Prezzo Socio: <strong className="text-amber-300">{prod.priceMember}</strong></span>
+                  <span className="text-emerald-400 font-bold">{prod.stock}</span>
+                </div>
               </div>
-            ))
-          )}
-        </div>
-      </div>
+            ))}
+          </div>
+        </section>
+
+      </main>
+
+      <BottomDock />
     </div>
   );
 }
