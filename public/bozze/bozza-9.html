@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 9: Botanical Greenhouse (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            garden: {
+              bg: '#f8f5ee',
+              card: '#ffffff',
+              forest: '#264e36',
+              sage: '#7b9e87',
+              terracotta: '#c95d46',
+              clay: '#e28771',
+              dark: '#1e2d24'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8f5ee;
+      color: #1e2d24;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-garden-terracotta selection:text-white">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-garden-forest text-white px-5 py-2.5 rounded-full font-semibold text-xs shadow-2xl flex items-center gap-2 transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span>🌿</span>
+    <span id="toast-msg">Deck code copiato negli appunti!</span>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-[#f8f5ee]/95 backdrop-blur-md border-b border-garden-sage/30 px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-garden-forest p-0.5 shadow-sm flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+          <span class="font-serif font-bold text-base text-garden-forest block leading-none">Sinoira Gang</span>
+          <span class="text-[10px] font-semibold text-garden-terracotta tracking-wider uppercase">Circolo al Comala • Torino 🌿</span>
+        </div>
+      </div>
+
+      <button onclick="ecoAuth()" class="bg-garden-forest text-white font-bold text-xs px-3.5 py-1.5 rounded-full shadow-sm">
+        Soci 🌿
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Greenhouse Hero Card -->
+    <section class="rounded-2xl bg-garden-forest text-white p-4 shadow-md space-y-2.5 relative overflow-hidden">
+      <div class="inline-flex items-center gap-1.5 bg-white/10 px-2.5 py-0.5 rounded-full text-[10px] font-semibold text-emerald-200">
+        <span>🌱</span>
+        <span>Spazio Aperto & Mazzi Gratis</span>
+      </div>
+
+      <h1 class="font-serif font-bold text-xl text-white leading-snug">
+        Il Gioco di Carte Pokémon nel Verde di <span class="text-garden-clay italic">Torino</span>.
+      </h1>
+
+      <p class="text-emerald-100/90 text-xs font-normal leading-relaxed">
+        Tutti i lunedì sera ci riuniamo al Comala per giocare in totale serenità con mazzi pronti per tutti.
+      </p>
+
+      <div class="bg-black/20 p-2 rounded-xl border border-white/10 flex justify-between items-center text-[11px]">
+        <span class="text-emerald-200">📍 Comala, C.so Ferrucci</span>
+        <span class="text-white font-bold">Lunedì 20:30</span>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-serif font-bold text-base text-garden-forest">I Nostri Mazzi da Tavolo (6)</h2>
+      <span class="text-[10px] font-semibold text-garden-terracotta">Gratis 🌿</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openEco('charizard')" class="bg-white rounded-xl p-2.5 border border-garden-sage/30 shadow-sm cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-orange-50/70 rounded-lg mb-2 p-1.5 flex items-center justify-center">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+          </div>
+          <span class="text-[9px] font-bold text-garden-terracotta uppercase">🔥 Fuoco • Tier 1</span>
+          <h3 class="font-serif font-bold text-xs text-garden-forest leading-tight mt-0.5">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+          <span class="text-garden-sage font-bold">★★★★★</span>
+          <span class="text-garden-terracotta font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openEco('gardevoir')" class="bg-white rounded-xl p-2.5 border border-garden-sage/30 shadow-sm cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-purple-50/70 rounded-lg mb-2 p-1.5 flex items-center justify-center">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+          </div>
+          <span class="text-[9px] font-bold text-purple-600 uppercase">👁️ Psico • Combo</span>
+          <h3 class="font-serif font-bold text-xs text-garden-forest leading-tight mt-0.5">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+          <span class="text-garden-sage font-bold">★★★★★</span>
+          <span class="text-purple-600 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openEco('dragapult')" class="bg-white rounded-xl p-2.5 border border-garden-sage/30 shadow-sm cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-teal-50/70 rounded-lg mb-2 p-1.5 flex items-center justify-center">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+          </div>
+          <span class="text-[9px] font-bold text-teal-600 uppercase">🐉 Drago • Snipe</span>
+          <h3 class="font-serif font-bold text-xs text-garden-forest leading-tight mt-0.5">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+          <span class="text-garden-sage font-bold">★★★★★</span>
+          <span class="text-teal-600 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openEco('ragingbolt')" class="bg-white rounded-xl p-2.5 border border-garden-sage/30 shadow-sm cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-amber-50/70 rounded-lg mb-2 p-1.5 flex items-center justify-center">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+          </div>
+          <span class="text-[9px] font-bold text-amber-600 uppercase">🌿 Antico • Aggro</span>
+          <h3 class="font-serif font-bold text-xs text-garden-forest leading-tight mt-0.5">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+          <span class="text-garden-sage font-bold">★★★★★</span>
+          <span class="text-amber-600 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openEco('lugia')" class="bg-white rounded-xl p-2.5 border border-garden-sage/30 shadow-sm cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-blue-50/70 rounded-lg mb-2 p-1.5 flex items-center justify-center">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+          </div>
+          <span class="text-[9px] font-bold text-blue-600 uppercase">🕊️ Incolore • Turbo</span>
+          <h3 class="font-serif font-bold text-xs text-garden-forest leading-tight mt-0.5">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+          <span class="text-garden-sage font-bold">★★★★☆</span>
+          <span class="text-blue-600 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openEco('miraidon')" class="bg-white rounded-xl p-2.5 border border-garden-sage/30 shadow-sm cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-yellow-50/70 rounded-lg mb-2 p-1.5 flex items-center justify-center">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+          </div>
+          <span class="text-[9px] font-bold text-yellow-600 uppercase">⚡ Elettro • Fast</span>
+          <h3 class="font-serif font-bold text-xs text-garden-forest leading-tight mt-0.5">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+          <span class="text-garden-sage font-bold">★★★★★</span>
+          <span class="text-yellow-600 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-[#f8f5ee]/95 backdrop-blur-md border-t border-garden-sage/30 py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-bold text-garden-forest">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-garden-terracotta">
+        <span class="text-base">🌿</span>
+        <span class="text-[10px]">Mazzi</span>
+      </button>
+      <button onclick="showToast('Ritrovo Comala: Lunedì ore 20:30')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-garden-forest">
+        <span class="text-base">🏛️</span>
+        <span class="text-[10px]">Comala</span>
+      </button>
+      <button onclick="showToast('Formato Standard [F][G][H]')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-garden-forest">
+        <span class="text-base">🌱</span>
+        <span class="text-[10px]">Regole</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Circolo Ludico Torino')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-garden-forest">
+        <span class="text-base">🍃</span>
+        <span class="text-[10px]">Circolo</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Eco Slide-up Drawer -->
+  <div id="eco-overlay" onclick="closeEco()" class="fixed inset-0 z-50 bg-garden-dark/70 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="eco-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-garden-sage max-w-md mx-auto p-4 space-y-3 rounded-t-3xl transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+      <span class="text-xs font-bold text-garden-forest">🌿 Scheda Mazzo</span>
+      <button onclick="closeEco()" class="bg-slate-100 text-garden-forest w-7 h-7 rounded-full font-bold flex items-center justify-center">✕</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="ec-img" src="" class="w-16 object-contain">
+      <div>
+        <h3 id="ec-title" class="font-serif font-bold text-base text-garden-forest">Title</h3>
+        <p id="ec-desc" class="text-xs text-slate-600 mt-0.5 leading-snug">Descrizione mazzo...</p>
+      </div>
+    </div>
+
+    <button onclick="copyEcoCode()" class="w-full bg-garden-terracotta hover:bg-red-600 text-white font-bold text-xs py-2.5 rounded-full shadow-md">
+      📋 Copia Stringa TCG Live
+    </button>
+  </div>
+
+  <script>
+    const ecoDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", desc: "La spina dorsale del gioco con motore di ricerca universale e danni sempre crescenti.", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", desc: "Gioco di astuzia e controllo con infinite energie recuperabili dal cimitero.", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult / Dusknoir", desc: "Danni mirati sulla panchina nemica per un controllo totale del tavolo.", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", desc: "Unione tra natura ed energia antica per colpi rapidi e potenti.", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", desc: "Fossili leggendari che si risvegliano per caricare energie speciali.", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", desc: "Energia elettrica che popola la panchina in un istante.", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeEc = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openEco(k) {
+      activeEc = k;
+      const d = ecoDecks[k];
+      document.getElementById('ec-title').innerText = d.title;
+      document.getElementById('ec-desc').innerText = d.desc;
+      document.getElementById('ec-img').src = d.img;
+      document.getElementById('eco-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('eco-sheet').classList.add('sheet-open');
+    }
+
+    function closeEco() {
+      document.getElementById('eco-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('eco-sheet').classList.remove('sheet-open');
+    }
+
+    function copyEcoCode() {
+      navigator.clipboard.writeText("TCG Live list for " + ecoDecks[activeEc].title);
+      showToast("🌿 Codice copiato negli appunti!");
+      closeEco();
+    }
+
+    function ecoAuth() {
+      const e = prompt("Email socio:");
+      if (e) showToast("Benvenuto " + e + "! 🌿");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 10: Nintendo Switch OS (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            switch: {
+              bg: '#18181f',
+              card: '#24242d',
+              neonBlue: '#00c3e3',
+              neonRed: '#ff3c28',
+              border: '#363645'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #18181f;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-switch-neonRed selection:text-white">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-switch-card border-2 border-switch-neonBlue text-white px-5 py-2 rounded-full font-bold text-xs shadow-2xl flex items-center gap-2 transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span class="w-2 h-2 rounded-full bg-switch-neonBlue animate-ping"></span>
+    <span id="toast-msg">Mazzo aggiunto alla libreria!</span>
+  </div>
+
+  <!-- Switch Console Top Header -->
+  <header class="sticky top-0 z-40 bg-switch-bg/95 backdrop-blur-md border-b border-switch-border px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-switch-neonRed p-0.5 border border-white flex items-center justify-center flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+          <span class="font-black text-sm text-white block leading-none">SINOIRA GANG</span>
+          <span class="text-[9px] text-switch-neonBlue font-bold">Online • Comala Torino</span>
+        </div>
+      </div>
+
+      <button onclick="switchLogin()" class="bg-switch-neonBlue text-black font-black text-xs px-3.5 py-1.5 rounded-full">
+        Accedi [A]
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Joy-Con Hero Card -->
+    <section class="bg-switch-card border border-switch-border p-4 rounded-2xl space-y-2.5 relative overflow-hidden shadow-lg">
+      <div class="inline-flex items-center gap-1.5 bg-black/40 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-switch-neonRed">
+        <span>🎮</span>
+        <span>CONSOLE DASHBOARD • 6 MAZZI FREE</span>
+      </div>
+
+      <h1 class="font-black text-xl text-white leading-tight">
+        Scegli il tuo mazzo per stasera.
+      </h1>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Tutti i lunedì sera al Comala di Torino: mazzi Pokémon gratuiti da provare e postazioni per giocare a Super Smash Bros!
+      </p>
+
+      <div class="bg-black/40 p-2 rounded-xl border border-switch-border flex justify-between items-center text-[11px]">
+        <span class="text-slate-300">📍 Comala, C.so Ferrucci</span>
+        <span class="text-switch-neonBlue font-bold">Lunedì 20:30</span>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-black text-sm md:text-base text-white">Libreria Mazzi Pronti (6)</h2>
+      <span class="text-[10px] text-switch-neonBlue font-bold">Tocca per selezionare</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openSwitch('charizard')" class="bg-switch-card p-2.5 rounded-2xl border border-switch-border cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/50 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+          </div>
+          <span class="bg-switch-neonRed text-white text-[8px] font-black px-1.5 py-0.2 rounded-full inline-block">TIER 1</span>
+          <h3 class="font-bold text-xs text-white leading-tight mt-0.5">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-switch-border flex items-center justify-between text-[10px] font-bold">
+          <span class="text-switch-neonBlue">★ 5.0</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openSwitch('gardevoir')" class="bg-switch-card p-2.5 rounded-2xl border border-switch-border cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/50 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+          </div>
+          <span class="bg-purple-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full inline-block">CONTROL</span>
+          <h3 class="font-bold text-xs text-white leading-tight mt-0.5">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-switch-border flex items-center justify-between text-[10px] font-bold">
+          <span class="text-purple-400">★ 4.8</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openSwitch('dragapult')" class="bg-switch-card p-2.5 rounded-2xl border border-switch-border cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/50 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+          </div>
+          <span class="bg-teal-500 text-black text-[8px] font-black px-1.5 py-0.2 rounded-full inline-block">SPREAD</span>
+          <h3 class="font-bold text-xs text-white leading-tight mt-0.5">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-switch-border flex items-center justify-between text-[10px] font-bold">
+          <span class="text-teal-400">★ 4.9</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openSwitch('ragingbolt')" class="bg-switch-card p-2.5 rounded-2xl border border-switch-border cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/50 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+          </div>
+          <span class="bg-amber-500 text-black text-[8px] font-black px-1.5 py-0.2 rounded-full inline-block">AGGRO</span>
+          <h3 class="font-bold text-xs text-white leading-tight mt-0.5">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-switch-border flex items-center justify-between text-[10px] font-bold">
+          <span class="text-amber-400">★ 4.9</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openSwitch('lugia')" class="bg-switch-card p-2.5 rounded-2xl border border-switch-border cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/50 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+          </div>
+          <span class="bg-blue-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full inline-block">TURBO</span>
+          <h3 class="font-bold text-xs text-white leading-tight mt-0.5">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-switch-border flex items-center justify-between text-[10px] font-bold">
+          <span class="text-blue-400">★ 4.6</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openSwitch('miraidon')" class="bg-switch-card p-2.5 rounded-2xl border border-switch-border cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/50 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+          </div>
+          <span class="bg-yellow-400 text-black text-[8px] font-black px-1.5 py-0.2 rounded-full inline-block">PRIZE+</span>
+          <h3 class="font-bold text-xs text-white leading-tight mt-0.5">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-switch-border flex items-center justify-between text-[10px] font-bold">
+          <span class="text-yellow-400">★ 4.7</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-switch-bg/95 backdrop-blur-md border-t border-switch-border py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-bold">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-switch-neonRed">
+        <span class="text-base">🎮</span>
+        <span class="text-[9px]">Libreria</span>
+      </button>
+      <button onclick="showToast('Comala: Lunedì ore 20:30 Torino')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">📍</span>
+        <span class="text-[9px]">Comala</span>
+      </button>
+      <button onclick="showToast('Standard Format [F][G][H] Active')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">⚡</span>
+        <span class="text-[9px]">Meta</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang Console Club')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">👥</span>
+        <span class="text-[9px]">Amici</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Switch Slide-up Drawer -->
+  <div id="switch-overlay" onclick="closeSwitch()" class="fixed inset-0 z-50 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="switch-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-switch-card border-t-2 border-switch-neonBlue max-w-md mx-auto p-4 space-y-3 rounded-t-3xl transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-switch-border pb-2">
+      <span class="text-xs font-bold text-switch-neonBlue">🎮 Game Card Details</span>
+      <button onclick="closeSwitch()" class="bg-white/10 text-white w-7 h-7 rounded-full font-bold flex items-center justify-center">✕</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="swm-img" src="" class="w-16 object-contain">
+      <div>
+        <h3 id="swm-title" class="font-bold text-base text-white">Title</h3>
+        <p id="swm-desc" class="text-xs text-slate-400 mt-0.5 leading-snug">Descrizione...</p>
+      </div>
+    </div>
+
+    <button onclick="copySwitchCode()" class="w-full bg-switch-neonBlue hover:bg-cyan-400 text-black font-black text-xs py-2.5 rounded-full shadow-md uppercase tracking-wider">
+      📋 Copia Stringa TCG Live [A]
+    </button>
+  </div>
+
+  <script>
+    const switchDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", desc: "La scelta più bilanciata e vincente: cerca ogni carta con Pidgeot e attacca duro!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", desc: "Strategia psichica ricca di combo e rigenerazione di infinite energie.", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult / Dusknoir", desc: "Danni diffusi letali sia sul fronte che in panchina.", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", desc: "Aggressività pura fin dal primo turno di gioco.", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", desc: "Energia speciale a valanga con gli Archeops.", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", desc: "Popolamento istantaneo della panchina e premi extra.", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeSw = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openSwitch(k) {
+      activeSw = k;
+      const d = switchDecks[k];
+      document.getElementById('swm-title').innerText = d.title;
+      document.getElementById('swm-desc').innerText = d.desc;
+      document.getElementById('swm-img').src = d.img;
+      document.getElementById('switch-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('switch-sheet').classList.add('sheet-open');
+    }
+
+    function closeSwitch() {
+      document.getElementById('switch-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('switch-sheet').classList.remove('sheet-open');
+    }
+
+    function copySwitchCode() {
+      navigator.clipboard.writeText("TCG Live list for " + switchDecks[activeSw].title);
+      showToast("Deck code aggiunto alla libreria!");
+      closeSwitch();
+    }
+
+    function switchLogin() {
+      const e = prompt("Account Nintendo / Email:");
+      if (e) showToast("Accesso eseguito per " + e);
+    }
+  </script>
+</body>
+</html>

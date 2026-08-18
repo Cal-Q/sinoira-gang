@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 1: Neo-Torino Editorial (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            terracotta: {
+              50: '#fdf6f4',
+              100: '#faeae6',
+              500: '#c94c4c',
+              600: '#b43f3f',
+              700: '#943232',
+            },
+            sand: {
+              50: '#faf8f5',
+              100: '#f5f0e8',
+              200: '#e8decb',
+              900: '#23201c',
+            },
+            slatecustom: '#242b35',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #faf8f5;
+      color: #242b35;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .bottom-sheet {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+    .tap-press:active {
+      transform: scale(0.96);
+    }
+    .toast-enter {
+      transform: translate(-50%, 0) scale(1) !important;
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-terracotta-500 selection:text-white">
+
+  <!-- Mobile Bottom Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slatecustom text-white px-5 py-2.5 rounded-full shadow-2xl font-semibold text-xs flex items-center gap-2.5 transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap border border-white/10">
+    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span id="toast-msg">Deck code copiato negli appunti! 📋</span>
+  </div>
+
+  <!-- Mobile Header Bar -->
+  <header class="sticky top-0 z-40 bg-sand-50/90 backdrop-blur-xl border-b border-sand-200/80 px-4 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl overflow-hidden border border-terracotta-500/30 bg-terracotta-500 shadow-sm flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="font-display font-extrabold text-base tracking-tight text-slatecustom leading-none block">SINOIRA<span class="text-terracotta-500">.</span>GANG</span>
+          <span class="text-[10px] font-bold text-slate-500 tracking-wider uppercase">Torino Gaming Club</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="showLogin()" class="tap-press bg-slatecustom hover:bg-slate-900 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl shadow-sm transition-all">
+          Accedi
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Mobile App Layout Container -->
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-4 space-y-5">
+
+    <!-- Stories Bar (Horizontal Mobile Reel) -->
+    <section>
+      <div class="flex gap-3 overflow-x-auto custom-scroll py-1 -mx-3.5 px-3.5">
+        <!-- Story 1 -->
+        <div onclick="openStory('comala')" class="flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer tap-press">
+          <div class="w-14 h-14 rounded-full p-[2px] bg-gradient-to-tr from-terracotta-500 via-amber-400 to-red-500 shadow-sm">
+            <div class="w-full h-full rounded-full bg-white p-0.5 overflow-hidden">
+              <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=120&auto=format&fit=crop&q=80')"></div>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-slate-700">Comala</span>
+        </div>
+
+        <!-- Story 2 -->
+        <div onclick="openStory('mazzi')" class="flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer tap-press">
+          <div class="w-14 h-14 rounded-full p-[2px] bg-gradient-to-tr from-terracotta-500 via-amber-400 to-red-500 shadow-sm">
+            <div class="w-full h-full rounded-full bg-white p-0.5 overflow-hidden">
+              <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=120&auto=format&fit=crop&q=80')"></div>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-slate-700">Mazzi Free</span>
+        </div>
+
+        <!-- Story 3 -->
+        <div onclick="openStory('smash')" class="flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer tap-press">
+          <div class="w-14 h-14 rounded-full p-[2px] bg-gradient-to-tr from-terracotta-500 via-amber-400 to-red-500 shadow-sm">
+            <div class="w-full h-full rounded-full bg-white p-0.5 overflow-hidden">
+              <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=120&auto=format&fit=crop&q=80')"></div>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-slate-700">Smash Bros</span>
+        </div>
+
+        <!-- Story 4 -->
+        <div onclick="openStory('meta')" class="flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer tap-press">
+          <div class="w-14 h-14 rounded-full p-[2px] bg-sand-300 shadow-sm">
+            <div class="w-full h-full rounded-full bg-white p-0.5 overflow-hidden">
+              <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=120&auto=format&fit=crop&q=80')"></div>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-slate-700">Rotazione</span>
+        </div>
+
+        <!-- Story 5 -->
+        <div onclick="openStory('box')" class="flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer tap-press">
+          <div class="w-14 h-14 rounded-full p-[2px] bg-sand-300 shadow-sm">
+            <div class="w-full h-full rounded-full bg-white p-0.5 overflow-hidden">
+              <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=120&auto=format&fit=crop&q=80')"></div>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-slate-700">Sigillati</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compact Mobile Hero Card -->
+    <section class="rounded-2xl bg-gradient-to-br from-terracotta-500 to-terracotta-700 text-white p-4 shadow-lg space-y-3 relative overflow-hidden">
+      <div class="flex items-center justify-between">
+        <span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+          Ritrovo Ufficiale
+        </span>
+        <span class="text-[11px] font-bold text-amber-200">Ogni Lunedì • 20:30</span>
+      </div>
+
+      <div>
+        <h1 class="font-display font-black text-xl leading-tight">
+          Pokémon TCG a Torino. <br>
+          <span class="text-amber-200 font-serif italic">Mazzi gratuiti per tutti.</span>
+        </h1>
+        <p class="text-white/85 text-xs mt-1 leading-relaxed">
+          Nessuna spesa. Vieni al Comala, prendi un mazzo e gioca subito tra amici!
+        </p>
+      </div>
+
+      <div class="bg-black/20 rounded-xl p-2.5 flex items-center justify-between text-xs backdrop-blur-sm border border-white/10">
+        <div class="flex items-center gap-2">
+          <span>📍</span>
+          <span class="font-bold text-[11px]">Comala, C.so Ferrucci 65/a</span>
+        </div>
+        <span class="bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded">Ingresso Libero</span>
+      </div>
+    </section>
+
+    <!-- Filter Chips (Horizontal Swipe) -->
+    <section class="space-y-2">
+      <div class="flex items-center justify-between">
+        <h2 class="font-display font-bold text-base text-slatecustom flex items-center gap-1.5">
+          <span>Mazzi Pronti da Giocare</span>
+          <span class="text-xs font-normal text-terracotta-500 font-sans font-bold">(6)</span>
+        </h2>
+        <span class="text-[10px] font-bold text-slate-400">Tocca per dettagli</span>
+      </div>
+
+      <div class="flex gap-1.5 overflow-x-auto custom-scroll -mx-3.5 px-3.5 pb-1 text-xs">
+        <button onclick="filterType('all')" class="type-pill active bg-slatecustom text-white px-3 py-1.5 rounded-xl font-bold whitespace-nowrap shadow-sm">Tutti (6)</button>
+        <button onclick="filterType('fuoco')" class="type-pill bg-white border border-sand-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap">🔥 Fuoco</button>
+        <button onclick="filterType('psico')" class="type-pill bg-white border border-sand-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap">👁️ Psico</button>
+        <button onclick="filterType('drago')" class="type-pill bg-white border border-sand-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap">🐉 Drago</button>
+        <button onclick="filterType('elettro')" class="type-pill bg-white border border-sand-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap">⚡ Elettro</button>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Deck 1 -->
+      <div onclick="openSheet('charizard')" class="deck-item tap-press bg-white rounded-2xl p-2.5 border border-sand-200 shadow-sm flex flex-col justify-between cursor-pointer">
+        <div>
+          <div class="aspect-[4/3] bg-gradient-to-tr from-amber-100 to-red-100 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden mb-2">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain drop-shadow-sm">
+            <span class="absolute top-1 left-1 bg-slatecustom text-white text-[8px] font-black px-1.5 py-0.2 rounded">TIER 1</span>
+          </div>
+          <span class="text-[9px] font-bold text-terracotta-500 uppercase tracking-wider">Fuoco • Setup</span>
+          <h3 class="font-display font-extrabold text-xs text-slatecustom leading-snug">Charizard ex / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-sand-100 flex items-center justify-between text-[10px]">
+          <span class="text-amber-500 font-bold">★ 5.0</span>
+          <span class="text-terracotta-500 font-bold">Copia ➔</span>
+        </div>
+      </div>
+
+      <!-- Deck 2 -->
+      <div onclick="openSheet('gardevoir')" class="deck-item tap-press bg-white rounded-2xl p-2.5 border border-sand-200 shadow-sm flex flex-col justify-between cursor-pointer">
+        <div>
+          <div class="aspect-[4/3] bg-gradient-to-tr from-purple-100 to-pink-100 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden mb-2">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain drop-shadow-sm">
+            <span class="absolute top-1 left-1 bg-purple-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded">COMBO</span>
+          </div>
+          <span class="text-[9px] font-bold text-purple-600 uppercase tracking-wider">Psico • Control</span>
+          <h3 class="font-display font-extrabold text-xs text-slatecustom leading-snug">Gardevoir ex / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-sand-100 flex items-center justify-between text-[10px]">
+          <span class="text-amber-500 font-bold">★ 4.8</span>
+          <span class="text-purple-600 font-bold">Copia ➔</span>
+        </div>
+      </div>
+
+      <!-- Deck 3 -->
+      <div onclick="openSheet('dragapult')" class="deck-item tap-press bg-white rounded-2xl p-2.5 border border-sand-200 shadow-sm flex flex-col justify-between cursor-pointer">
+        <div>
+          <div class="aspect-[4/3] bg-gradient-to-tr from-teal-100 to-indigo-100 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden mb-2">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain drop-shadow-sm">
+            <span class="absolute top-1 left-1 bg-teal-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded">SPREAD</span>
+          </div>
+          <span class="text-[9px] font-bold text-teal-600 uppercase tracking-wider">Drago • Snipe</span>
+          <h3 class="font-display font-extrabold text-xs text-slatecustom leading-snug">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-sand-100 flex items-center justify-between text-[10px]">
+          <span class="text-amber-500 font-bold">★ 4.9</span>
+          <span class="text-teal-600 font-bold">Copia ➔</span>
+        </div>
+      </div>
+
+      <!-- Deck 4 -->
+      <div onclick="openSheet('ragingbolt')" class="deck-item tap-press bg-white rounded-2xl p-2.5 border border-sand-200 shadow-sm flex flex-col justify-between cursor-pointer">
+        <div>
+          <div class="aspect-[4/3] bg-gradient-to-tr from-amber-100 to-emerald-100 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden mb-2">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain drop-shadow-sm">
+            <span class="absolute top-1 left-1 bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded">AGGRO</span>
+          </div>
+          <span class="text-[9px] font-bold text-amber-600 uppercase tracking-wider">Antico • Danni MAX</span>
+          <h3 class="font-display font-extrabold text-xs text-slatecustom leading-snug">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-sand-100 flex items-center justify-between text-[10px]">
+          <span class="text-amber-500 font-bold">★ 4.9</span>
+          <span class="text-amber-600 font-bold">Copia ➔</span>
+        </div>
+      </div>
+
+      <!-- Deck 5 -->
+      <div onclick="openSheet('lugia')" class="deck-item tap-press bg-white rounded-2xl p-2.5 border border-sand-200 shadow-sm flex flex-col justify-between cursor-pointer">
+        <div>
+          <div class="aspect-[4/3] bg-gradient-to-tr from-sky-100 to-blue-100 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden mb-2">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain drop-shadow-sm">
+            <span class="absolute top-1 left-1 bg-blue-600 text-white text-[8px] font-black px-1.5 py-0.2 rounded">TURBO</span>
+          </div>
+          <span class="text-[9px] font-bold text-blue-600 uppercase tracking-wider">Incolore • Energy</span>
+          <h3 class="font-display font-extrabold text-xs text-slatecustom leading-snug">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-sand-100 flex items-center justify-between text-[10px]">
+          <span class="text-amber-500 font-bold">★ 4.6</span>
+          <span class="text-blue-600 font-bold">Copia ➔</span>
+        </div>
+      </div>
+
+      <!-- Deck 6 -->
+      <div onclick="openSheet('miraidon')" class="deck-item tap-press bg-white rounded-2xl p-2.5 border border-sand-200 shadow-sm flex flex-col justify-between cursor-pointer">
+        <div>
+          <div class="aspect-[4/3] bg-gradient-to-tr from-yellow-100 to-amber-100 rounded-xl p-1.5 flex items-center justify-center relative overflow-hidden mb-2">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain drop-shadow-sm">
+            <span class="absolute top-1 left-1 bg-yellow-500 text-black text-[8px] font-black px-1.5 py-0.2 rounded">PRIZE+</span>
+          </div>
+          <span class="text-[9px] font-bold text-yellow-600 uppercase tracking-wider">Elettro • Generator</span>
+          <h3 class="font-display font-extrabold text-xs text-slatecustom leading-snug">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-sand-100 flex items-center justify-between text-[10px]">
+          <span class="text-amber-500 font-bold">★ 4.7</span>
+          <span class="text-yellow-600 font-bold">Copia ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Mobile Events Cards -->
+    <section id="eventi" class="bg-white rounded-2xl p-3.5 border border-sand-200 shadow-sm space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display font-bold text-sm text-slatecustom">Prossime Serate @ Comala</h3>
+        <span class="text-[10px] font-bold text-terracotta-500">Free Entry</span>
+      </div>
+
+      <div class="space-y-2">
+        <div class="bg-sand-50 p-2.5 rounded-xl border border-sand-200/60 flex items-center justify-between text-xs">
+          <div>
+            <span class="text-[10px] font-extrabold text-terracotta-600 block">LUNEDÌ 20:30</span>
+            <span class="font-bold text-slatecustom text-xs">Free Play TCG & Consegna Mazzi</span>
+          </div>
+          <span class="text-[10px] font-bold bg-white px-2 py-1 rounded-lg border border-sand-200">Aperto</span>
+        </div>
+
+        <div class="bg-sand-50 p-2.5 rounded-xl border border-sand-200/60 flex items-center justify-between text-xs">
+          <div>
+            <span class="text-[10px] font-extrabold text-amber-600 block">MERCOLEDÌ 21:00</span>
+            <span class="font-bold text-slatecustom text-xs">Super Smash Bros Night</span>
+          </div>
+          <span class="text-[10px] font-bold bg-white px-2 py-1 rounded-lg border border-sand-200">3 Monitor</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Sticky Navigation Dock -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-xl border-t border-sand-200 py-2 px-6 shadow-2xl">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-bold">
+      <button onclick="scrollToTop()" class="flex flex-col items-center gap-0.5 text-terracotta-500 tap-press">
+        <span class="text-base">🎴</span>
+        <span class="text-[10px]">Mazzi</span>
+      </button>
+      <button onclick="showToast('Ritrovo: Lunedì ore 20:30 @ Comala Torino')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-slatecustom tap-press">
+        <span class="text-base">📅</span>
+        <span class="text-[10px]">Comala</span>
+      </button>
+      <button onclick="showToast('Rotazione Standard: Set [F][G][H] attivi')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-slatecustom tap-press">
+        <span class="text-base">🔄</span>
+        <span class="text-[10px]">Meta</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Associazione non competitiva Torino')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-slatecustom tap-press">
+        <span class="text-base">👥</span>
+        <span class="text-[10px]">Club</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Bottom Sheet Modal -->
+  <div id="sheet-overlay" onclick="closeSheet()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  <div id="bottom-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl max-w-md mx-auto p-5 space-y-4 shadow-2xl transform translate-y-full bottom-sheet max-h-[85vh] overflow-y-auto custom-scroll">
+    <!-- Drag Handle -->
+    <div class="w-12 h-1 bg-slate-300 rounded-full mx-auto mb-2"></div>
+
+    <div class="flex items-start justify-between">
+      <div class="flex items-center gap-3">
+        <img id="sheet-img" src="" class="w-16 h-20 object-contain bg-sand-50 rounded-xl p-1 border border-sand-200 flex-shrink-0">
+        <div>
+          <span id="sheet-badge" class="bg-terracotta-100 text-terracotta-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">TIER 1</span>
+          <h3 id="sheet-title" class="font-display font-black text-base text-slatecustom mt-1">Deck Title</h3>
+          <span id="sheet-stars" class="text-xs text-amber-500 font-bold">★★★★★</span>
+        </div>
+      </div>
+      <button onclick="closeSheet()" class="bg-sand-100 text-slatecustom w-8 h-8 rounded-full font-bold flex items-center justify-center tap-press">✕</button>
+    </div>
+
+    <p id="sheet-desc" class="text-xs text-slate-600 leading-relaxed bg-sand-50 p-3 rounded-xl border border-sand-200">Descrizione...</p>
+
+    <!-- Strategy Mini Slots -->
+    <div class="space-y-2">
+      <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Strategia in 3 Step:</span>
+      <div class="grid grid-cols-3 gap-1.5 text-[10px]">
+        <div class="bg-sand-50 p-2 rounded-xl border border-sand-200 space-y-0.5 text-center">
+          <span class="font-bold text-terracotta-500">1. Setup</span>
+          <p class="text-slate-500 text-[9px] leading-tight">Cerca i base con Poffin</p>
+        </div>
+        <div class="bg-sand-50 p-2 rounded-xl border border-sand-200 space-y-0.5 text-center">
+          <span class="font-bold text-terracotta-500">2. Pressione</span>
+          <p class="text-slate-500 text-[9px] leading-tight">Carica l'attaccante</p>
+        </div>
+        <div class="bg-sand-50 p-2 rounded-xl border border-sand-200 space-y-0.5 text-center">
+          <span class="font-bold text-terracotta-500">3. Chiusura</span>
+          <p class="text-slate-500 text-[9px] leading-tight">Prendi gli ultimi premi</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Button -->
+    <button onclick="copyCode()" class="w-full bg-terracotta-500 hover:bg-terracotta-600 text-white font-display font-bold text-xs py-3 rounded-2xl shadow-md tap-press flex items-center justify-center gap-2">
+      <span>📋 Copia Codice per TCG Live</span>
+    </button>
+  </div>
+
+  <script>
+    const decks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "TIER 1 META", desc: "La combo classica: cerca ogni risorsa con Quick Search di Pidgeot e infliggi danni devastanti con Charizard ex!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png", stars: "★★★★★" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "CONTROL TRICK", desc: "Rianima energie infinite dal cimitero e tira colpi da 360 danni con Drifloon!", img: "https://images.pokemontcg.io/sv1/86_hires.png", stars: "★★★★☆" },
+      dragapult: { title: "Dragapult / Dusknoir", badge: "SPREAD DAMAGE", desc: "200 danni sul Pokémon attivo e 60 danni cecchino a piacere sulla panchina ogni turno!", img: "https://images.pokemontcg.io/sv6/130_hires.png", stars: "★★★★☆" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "HYPER AGGRO", desc: "Attacca fin dal primo turno scartando energie per danni illimitati!", img: "https://images.pokemontcg.io/sv5/123_hires.png", stars: "★★★★★" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "SPECIAL TURBO", desc: "Evoca 2 Archeops dal cimitero e carica 4 energie speciali in un secondo!", img: "https://images.pokemontcg.io/swsh12/139_hires.png", stars: "★★★★☆" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "FAST PRIZE+", desc: "Riempi la panchina con Tandem Unit e prendi premi doppi!", img: "https://images.pokemontcg.io/sv1/81_hires.png", stars: "★★★★★" }
+    };
+    let activeKey = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.add('toast-enter');
+      setTimeout(() => t.classList.remove('toast-enter'), 2200);
+    }
+
+    function openSheet(k) {
+      activeKey = k;
+      const d = decks[k];
+      document.getElementById('sheet-title').innerText = d.title;
+      document.getElementById('sheet-badge').innerText = d.badge;
+      document.getElementById('sheet-desc').innerText = d.desc;
+      document.getElementById('sheet-img').src = d.img;
+      document.getElementById('sheet-stars').innerText = d.stars;
+
+      document.getElementById('sheet-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('bottom-sheet').classList.add('sheet-open');
+    }
+
+    function closeSheet() {
+      document.getElementById('sheet-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('bottom-sheet').classList.remove('sheet-open');
+    }
+
+    function copyCode() {
+      navigator.clipboard.writeText("TCG Live list for " + decks[activeKey].title);
+      showToast("Codice mazzo copiato! 📋");
+      closeSheet();
+    }
+
+    function showLogin() {
+      const e = prompt("Email socio Google:");
+      if (e) showToast("Accesso eseguito!");
+    }
+
+    function openStory(type) {
+      if (type === 'comala') showToast("Comala: Ritrovo ogni Lunedì ore 20:30!");
+      if (type === 'mazzi') showToast("Mazzi: Disponibili gratuitamente al bancone.");
+      if (type === 'smash') showToast("Smash Bros: Serata libera ogni Mercoledì.");
+      if (type === 'meta') showToast("Formato: Standard regolamento [F][G][H].");
+      if (type === 'box') showToast("Box e bustine disponibili per i soci!");
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterType(t) {
+      document.querySelectorAll('.type-pill').forEach(b => {
+        b.className = 'type-pill bg-white border border-sand-200 text-slate-700 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap';
+      });
+      event.target.className = 'type-pill active bg-slatecustom text-white px-3 py-1.5 rounded-xl font-bold whitespace-nowrap shadow-sm';
+      showToast("Filtro: " + t);
+    }
+  </script>
+</body>
+</html>

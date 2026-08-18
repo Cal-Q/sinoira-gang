@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 4: Kyoto Tea & Cozy Hub (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Mali:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mali: ['Mali', 'cursive'],
+            sans: ['Nunito', 'sans-serif'],
+          },
+          colors: {
+            cozy: {
+              cream: '#fffdf9',
+              matcha: '#6b8e23',
+              matchaLight: '#eef3e2',
+              coral: '#e76f51',
+              peach: '#f4a261',
+              sage: '#8ab17d',
+              night: '#264653',
+              card: '#ffffff'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #fffdf9;
+      color: #264653;
+      font-family: 'Nunito', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .wobbly-box {
+      border-radius: 20px;
+      box-shadow: 0 4px 16px -4px rgba(231, 111, 81, 0.1);
+    }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-cozy-coral selection:text-white">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-cozy-night text-white px-5 py-2.5 rounded-full font-bold text-xs shadow-2xl flex items-center gap-2 transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span>🌸</span>
+    <span id="toast-msg">Mazzo copiato con successo!</span>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-cozy-cream/95 backdrop-blur-md border-b border-amber-100 px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-cozy-coral p-0.5 shadow-sm border border-white flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+          <span class="font-mali font-bold text-base text-cozy-coral leading-none block">Sinoira Gang</span>
+          <span class="text-[10px] font-bold text-cozy-sage">Torino Pokémon Club 🍃</span>
+        </div>
+      </div>
+
+      <button onclick="promptUser()" class="bg-cozy-coral text-white font-bold text-xs px-3.5 py-1.5 rounded-full shadow-sm">
+        Amici 🌸
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Cozy Welcome Card -->
+    <section class="bg-gradient-to-br from-amber-50 to-cozy-matchaLight p-4 wobbly-box border border-amber-100 space-y-2">
+      <div class="inline-flex items-center gap-1.5 bg-white/90 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-cozy-coral">
+        <span>🍙</span>
+        <span>Mazzi gratuiti per tutti</span>
+      </div>
+
+      <h1 class="font-mali font-bold text-xl text-cozy-night leading-snug">
+        Prendi un mazzo e gioca con noi al Comala!
+      </h1>
+
+      <p class="text-xs text-slate-600 font-medium">
+        Ogni lunedì sera a Torino: carte gratuite, serate senza stress e tanti amici 🍵
+      </p>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-mali font-bold text-base text-cozy-night">I Nostri Mazzi Fisici (6)</h2>
+      <span class="text-[10px] font-bold text-cozy-coral">100% Gratis 🍃</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openCozy('charizard')" class="bg-white p-2.5 wobbly-box border border-amber-100 shadow-sm cursor-pointer flex flex-col justify-between group">
+        <div>
+          <div class="aspect-square bg-gradient-to-tr from-amber-100 to-rose-100 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+          </div>
+          <span class="bg-amber-100 text-amber-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full inline-block">Amichevole</span>
+          <h3 class="font-bold text-xs text-cozy-night leading-tight mt-0.5">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-amber-50 flex items-center justify-between text-[10px]">
+          <span class="text-cozy-coral font-bold">★★★★★</span>
+          <span class="text-slate-400 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openCozy('gardevoir')" class="bg-white p-2.5 wobbly-box border border-amber-100 shadow-sm cursor-pointer flex flex-col justify-between group">
+        <div>
+          <div class="aspect-square bg-gradient-to-tr from-purple-100 to-pink-100 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+          </div>
+          <span class="bg-purple-100 text-purple-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full inline-block">Combo</span>
+          <h3 class="font-bold text-xs text-cozy-night leading-tight mt-0.5">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-amber-50 flex items-center justify-between text-[10px]">
+          <span class="text-cozy-coral font-bold">★★★★★</span>
+          <span class="text-slate-400 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openCozy('dragapult')" class="bg-white p-2.5 wobbly-box border border-amber-100 shadow-sm cursor-pointer flex flex-col justify-between group">
+        <div>
+          <div class="aspect-square bg-gradient-to-tr from-teal-100 to-sky-100 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+          </div>
+          <span class="bg-teal-100 text-teal-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full inline-block">Pioggia Danni</span>
+          <h3 class="font-bold text-xs text-cozy-night leading-tight mt-0.5">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-amber-50 flex items-center justify-between text-[10px]">
+          <span class="text-cozy-coral font-bold">★★★★★</span>
+          <span class="text-slate-400 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openCozy('ragingbolt')" class="bg-white p-2.5 wobbly-box border border-amber-100 shadow-sm cursor-pointer flex flex-col justify-between group">
+        <div>
+          <div class="aspect-square bg-gradient-to-tr from-amber-100 to-emerald-100 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full inline-block">Veloce</span>
+          <h3 class="font-bold text-xs text-cozy-night leading-tight mt-0.5">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-amber-50 flex items-center justify-between text-[10px]">
+          <span class="text-cozy-coral font-bold">★★★★★</span>
+          <span class="text-slate-400 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openCozy('lugia')" class="bg-white p-2.5 wobbly-box border border-amber-100 shadow-sm cursor-pointer flex flex-col justify-between group">
+        <div>
+          <div class="aspect-square bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+          </div>
+          <span class="bg-blue-100 text-blue-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full inline-block">Turbo</span>
+          <h3 class="font-bold text-xs text-cozy-night leading-tight mt-0.5">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-amber-50 flex items-center justify-between text-[10px]">
+          <span class="text-cozy-coral font-bold">★★★★☆</span>
+          <span class="text-slate-400 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openCozy('miraidon')" class="bg-white p-2.5 wobbly-box border border-amber-100 shadow-sm cursor-pointer flex flex-col justify-between group">
+        <div>
+          <div class="aspect-square bg-gradient-to-tr from-yellow-100 to-amber-100 rounded-xl p-1.5 flex items-center justify-center mb-2">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+          </div>
+          <span class="bg-yellow-100 text-yellow-800 text-[8px] font-bold px-1.5 py-0.2 rounded-full inline-block">Doppi Premi</span>
+          <h3 class="font-bold text-xs text-cozy-night leading-tight mt-0.5">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-amber-50 flex items-center justify-between text-[10px]">
+          <span class="text-cozy-coral font-bold">★★★★★</span>
+          <span class="text-slate-400 font-bold">Vedi ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-amber-100 py-2 px-6 shadow-md">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-bold">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-cozy-coral">
+        <span class="text-base">🎴</span>
+        <span class="text-[10px]">Mazzi</span>
+      </button>
+      <button onclick="showToast('Ci vediamo Lunedì ore 20:30 al Comala 🍵')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-cozy-coral">
+        <span class="text-base">📅</span>
+        <span class="text-[10px]">Ritrovi</span>
+      </button>
+      <button onclick="showToast('Formato Standard Amichevole 🌸')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-cozy-coral">
+        <span class="text-base">🍃</span>
+        <span class="text-[10px]">Regole</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Il circolo dei giochi a Torino')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-cozy-coral">
+        <span class="text-base">💬</span>
+        <span class="text-[10px]">Tana</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Cozy Drawer -->
+  <div id="cozy-overlay" onclick="closeCozy()" class="fixed inset-0 z-50 bg-cozy-night/60 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="cozy-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-amber-100 max-w-md mx-auto p-4 space-y-3 rounded-t-3xl transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-amber-50 pb-2">
+      <span class="text-xs font-bold text-cozy-coral">🌸 Scheda Mazzo</span>
+      <button onclick="closeCozy()" class="bg-amber-100 text-cozy-night w-7 h-7 rounded-full font-bold flex items-center justify-center">✕</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="cz-img" src="" class="w-16 object-contain">
+      <div>
+        <h3 id="cz-title" class="font-mali font-bold text-base text-cozy-night">Title</h3>
+        <p id="cz-desc" class="text-xs text-slate-500 mt-0.5">Descrizione mazzo...</p>
+      </div>
+    </div>
+
+    <button onclick="copyCozyCode()" class="w-full bg-cozy-coral hover:bg-red-500 text-white font-bold text-xs py-2.5 rounded-full shadow-md">
+      📋 Copia Codice per TCG Live 🌸
+    </button>
+  </div>
+
+  <script>
+    const cDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", desc: "Il mazzo più amichevole e forte per iniziare. Pidgeot trova sempre la carta giusta!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", desc: "Tante energie e strategie carine per chi ama giocare di pensiero e combo.", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult / Dusknoir", desc: "Lancia piccoli fantasmini sulla panchina dell'avversario per divertirti.", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", desc: "Un simpatico dinosauro e Ogerpon per fare tanti danni subito.", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", desc: "Un grande drago bianco che risveglia gli uccelli fossili dal sonno!", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", desc: "L'elettricità del futuro che riempie il campo di amici in un lampo.", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeCz = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openCozy(k) {
+      activeCz = k;
+      const d = cDecks[k];
+      document.getElementById('cz-title').innerText = d.title;
+      document.getElementById('cz-desc').innerText = d.desc;
+      document.getElementById('cz-img').src = d.img;
+      document.getElementById('cozy-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('cozy-sheet').classList.add('sheet-open');
+    }
+
+    function closeCozy() {
+      document.getElementById('cozy-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('cozy-sheet').classList.remove('sheet-open');
+    }
+
+    function copyCozyCode() {
+      navigator.clipboard.writeText("TCG Live list for " + cDecks[activeCz].title);
+      showToast("Mazzo copiato negli appunti! 🌸");
+      closeCozy();
+    }
+
+    function promptUser() {
+      const e = prompt("Email socio:");
+      if (e) showToast("Benvenuto " + e + "! 🍵");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 6: Holo Foil Binder (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            binder: {
+              leather: '#101114',
+              card: '#18191f',
+              gold: '#d4af37',
+              goldLight: '#f3e5ab',
+              accent: '#e63946',
+              border: '#2a2d36'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #101114;
+      color: #f1f2f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .gold-foil {
+      background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa820a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-binder-gold selection:text-black">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-binder-leather border border-binder-gold text-binder-goldLight px-5 py-2 rounded-full text-xs font-bold shadow-2xl flex items-center gap-2 transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span class="w-2 h-2 rounded-full bg-binder-gold animate-ping"></span>
+    <span id="toast-msg">LISTA SALVATA NEL RACCOGLITORE</span>
+  </div>
+
+  <!-- Mobile Top Header -->
+  <header class="sticky top-0 z-40 bg-binder-leather/95 backdrop-blur-md border-b border-binder-gold/20 px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg p-0.5 bg-gradient-to-tr from-binder-gold to-amber-200 flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-lg">
+        </div>
+        <div>
+          <span class="font-cinzel font-bold text-sm text-white block leading-none">SINOIRA GANG</span>
+          <span class="text-[9px] font-mono gold-foil font-bold uppercase">CARD BINDER • TORINO</span>
+        </div>
+      </div>
+
+      <button onclick="loginMember()" class="bg-gradient-to-r from-binder-gold to-amber-500 text-black font-bold text-[11px] px-3.5 py-1.5 rounded-lg shadow-sm">
+        Soci
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Binder Hero Card -->
+    <section class="bg-binder-card border border-binder-gold/30 p-4 rounded-2xl space-y-2 relative overflow-hidden shadow-lg">
+      <div class="inline-flex items-center gap-1.5 bg-white/5 border border-binder-gold/30 px-2.5 py-0.5 rounded-full text-[10px] font-mono gold-foil uppercase">
+        <span>★</span> 100% MAZZI FISICI GRATUITI
+      </div>
+
+      <h1 class="font-cinzel font-bold text-xl text-white leading-snug">
+        Il Raccoglitore di <span class="gold-foil">Sinoira Gang</span>
+      </h1>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Scegli il tuo mazzo per stasera. Nessun costo, nessuna spesa: prendi una custodia e gioca al Comala!
+      </p>
+
+      <div class="bg-black/40 p-2 rounded-xl border border-white/5 flex justify-between items-center text-[11px] font-mono">
+        <span class="text-slate-300">📍 Comala, C.so Ferrucci</span>
+        <span class="text-binder-gold font-bold">Lunedì 20:30</span>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-cinzel font-bold text-sm text-white uppercase">6 Pocket Decks</h2>
+      <span class="text-[10px] font-mono gold-foil">Tocca per sleeve</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openBinder('charizard')" class="bg-binder-card border border-binder-gold/30 hover:border-binder-gold p-2.5 rounded-xl cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/60 rounded-lg p-1.5 flex items-center justify-center relative mb-2 border border-white/5">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-binder-gold text-black text-[7px] font-black px-1.5 py-0.2 rounded">FOIL #01</span>
+          </div>
+          <span class="text-[9px] font-mono text-amber-400 font-bold uppercase">Fuoco • Tier 1</span>
+          <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-white/10 flex justify-between items-center text-[10px] font-mono">
+          <span class="text-binder-gold">★★★★★</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openBinder('gardevoir')" class="bg-binder-card border border-binder-gold/30 hover:border-purple-400 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/60 rounded-lg p-1.5 flex items-center justify-center relative mb-2 border border-white/5">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-purple-500 text-white text-[7px] font-black px-1.5 py-0.2 rounded">FOIL #02</span>
+          </div>
+          <span class="text-[9px] font-mono text-purple-400 font-bold uppercase">Psico • Control</span>
+          <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-white/10 flex justify-between items-center text-[10px] font-mono">
+          <span class="text-binder-gold">★★★★★</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openBinder('dragapult')" class="bg-binder-card border border-binder-gold/30 hover:border-teal-400 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/60 rounded-lg p-1.5 flex items-center justify-center relative mb-2 border border-white/5">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-teal-500 text-black text-[7px] font-black px-1.5 py-0.2 rounded">FOIL #03</span>
+          </div>
+          <span class="text-[9px] font-mono text-teal-400 font-bold uppercase">Drago • Snipe</span>
+          <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-white/10 flex justify-between items-center text-[10px] font-mono">
+          <span class="text-binder-gold">★★★★★</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openBinder('ragingbolt')" class="bg-binder-card border border-binder-gold/30 hover:border-amber-400 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/60 rounded-lg p-1.5 flex items-center justify-center relative mb-2 border border-white/5">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-amber-500 text-black text-[7px] font-black px-1.5 py-0.2 rounded">FOIL #04</span>
+          </div>
+          <span class="text-[9px] font-mono text-amber-400 font-bold uppercase">Antico • Aggro</span>
+          <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-white/10 flex justify-between items-center text-[10px] font-mono">
+          <span class="text-binder-gold">★★★★★</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openBinder('lugia')" class="bg-binder-card border border-binder-gold/30 hover:border-blue-400 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/60 rounded-lg p-1.5 flex items-center justify-center relative mb-2 border border-white/5">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-blue-500 text-white text-[7px] font-black px-1.5 py-0.2 rounded">FOIL #05</span>
+          </div>
+          <span class="text-[9px] font-mono text-blue-400 font-bold uppercase">Incolore • Turbo</span>
+          <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-white/10 flex justify-between items-center text-[10px] font-mono">
+          <span class="text-binder-gold">★★★★☆</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openBinder('miraidon')" class="bg-binder-card border border-binder-gold/30 hover:border-yellow-400 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-[4/3] bg-black/60 rounded-lg p-1.5 flex items-center justify-center relative mb-2 border border-white/5">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-yellow-400 text-black text-[7px] font-black px-1.5 py-0.2 rounded">FOIL #06</span>
+          </div>
+          <span class="text-[9px] font-mono text-yellow-400 font-bold uppercase">Elettro • Generator</span>
+          <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-white/10 flex justify-between items-center text-[10px] font-mono">
+          <span class="text-binder-gold">★★★★★</span>
+          <span class="text-slate-400">Apri ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-binder-leather/95 backdrop-blur-md border-t border-binder-gold/20 py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-cinzel font-bold">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-binder-gold">
+        <span class="text-base">📖</span>
+        <span class="text-[9px]">Binder</span>
+      </button>
+      <button onclick="showToast('Comala: Corso Ferrucci 65/a, Torino')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">🏛️</span>
+        <span class="text-[9px]">Comala</span>
+      </button>
+      <button onclick="showToast('Rotazione Standard [F][G][H]')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">✨</span>
+        <span class="text-[9px]">Foil</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Associazione Torino')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">👥</span>
+        <span class="text-[9px]">Club</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Binder Slide-up Drawer -->
+  <div id="binder-overlay" onclick="closeBinder()" class="fixed inset-0 z-50 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="binder-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-binder-card border-t-2 border-binder-gold max-w-md mx-auto p-4 space-y-3 transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-white/10 pb-2">
+      <span id="bm-badge" class="font-mono text-[9px] gold-foil font-bold">POCKET FOIL #01</span>
+      <button onclick="closeBinder()" class="bg-binder-gold text-black font-cinzel font-bold text-xs px-2.5 py-0.5 rounded">X</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="bm-img" src="" class="w-16 bg-black p-1 rounded border border-binder-gold/30">
+      <div>
+        <h3 id="bm-title" class="font-cinzel font-bold text-sm text-white">Title</h3>
+        <p id="bm-desc" class="text-[11px] text-slate-300 font-sans mt-1 leading-snug">Descrizione...</p>
+      </div>
+    </div>
+
+    <button onclick="copyBinderCode()" class="w-full bg-gradient-to-r from-binder-gold to-amber-500 text-black font-bold text-xs py-3 rounded-xl shadow-md uppercase tracking-wider">
+      📋 Copia Codice TCG Live
+    </button>
+  </div>
+
+  <script>
+    const bDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "POCKET FOIL #01", desc: "La perla del raccoglitore: Quick Search trova ogni risorsa e Charizard infligge danni devastanti!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "POCKET FOIL #02", desc: "Strategia psichica con recupero illimitato di energie dal cimitero!", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult / Dusknoir", badge: "POCKET FOIL #03", desc: "Danni diffusi letali sia sul Pokémon attivo che in panchina.", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "POCKET FOIL #04", desc: "Hyper turbo con energie verdi e colpi fulminei ad alta pressione.", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "POCKET FOIL #05", desc: "Archeops speciali accelerano la partita verso una vittoria solida.", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "POCKET FOIL #06", desc: "Elettricità istantanea e premi doppi contro i Pokémon base nemici.", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeBinder = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openBinder(k) {
+      activeBinder = k;
+      const d = bDecks[k];
+      document.getElementById('bm-title').innerText = d.title;
+      document.getElementById('bm-badge').innerText = d.badge;
+      document.getElementById('bm-desc').innerText = d.desc;
+      document.getElementById('bm-img').src = d.img;
+      document.getElementById('binder-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('binder-sheet').classList.add('sheet-open');
+    }
+
+    function closeBinder() {
+      document.getElementById('binder-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('binder-sheet').classList.remove('sheet-open');
+    }
+
+    function copyBinderCode() {
+      navigator.clipboard.writeText("TCG Live list for " + bDecks[activeBinder].title);
+      showToast("LISTA SALVATA NEL RACCOGLITORE!");
+      closeBinder();
+    }
+
+    function loginMember() {
+      const e = prompt("Email socio:");
+      if (e) showToast("BENVENUTO " + e.toUpperCase());
+    }
+  </script>
+</body>
+</html>

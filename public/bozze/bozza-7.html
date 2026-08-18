@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 7: Swiss Grid (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+          colors: {
+            swiss: {
+              cream: '#f8f7f2',
+              black: '#121212',
+              card: '#1a1a1a',
+              red: '#eb3b3b',
+              gray: '#737373',
+              border: '#2b2b2b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #121212;
+      color: #f8f7f2;
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-swiss-red selection:text-white">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed top-0 left-0 right-0 z-50 bg-swiss-red text-white py-2 text-center font-mono font-bold text-[10px] uppercase tracking-widest transition-all duration-200 transform -translate-y-full opacity-0 pointer-events-none">
+    <span id="toast-msg">SYSTEM: DECK STRING EXPORTED</span>
+  </div>
+
+  <!-- Mobile Header -->
+  <header class="sticky top-0 z-40 bg-swiss-black/95 backdrop-blur-md border-b border-swiss-border px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-xs text-swiss-red font-bold">[TO]</span>
+        <span class="font-bold text-base tracking-tighter uppercase text-white">SINOIRA GANG</span>
+      </div>
+
+      <button onclick="authMember()" class="font-mono text-[10px] uppercase bg-white text-black px-3 py-1 font-bold hover:bg-swiss-red hover:text-white transition-colors">
+        [SOCI]
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Swiss Hero Block -->
+    <section class="bg-swiss-card border border-swiss-border p-4 space-y-3">
+      <div class="font-mono text-[9px] text-swiss-red font-bold uppercase tracking-widest">
+        00 / SISTEMA LUDICO TORINESE
+      </div>
+
+      <h1 class="font-bold text-2xl uppercase leading-tight text-white">
+        POKÉMON TCG <br>
+        <span class="text-swiss-red">GRATUITO & APERTO</span> <br>
+        OGNI LUNEDÌ.
+      </h1>
+
+      <p class="text-slate-400 text-xs font-mono leading-relaxed">
+        6 mazzi completi da torneo ad accesso libero ogni lunedì sera presso la struttura di Comala.
+      </p>
+
+      <div class="border-t border-swiss-border pt-2 flex justify-between items-center font-mono text-[10px]">
+        <span class="text-slate-400">COMALA TORINO</span>
+        <span class="text-emerald-400">LUN 20:30</span>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1 border-b border-swiss-border pb-1.5 font-mono text-xs">
+      <span class="text-swiss-red font-bold">01 / INVENTARIO MAZZI</span>
+      <span class="text-slate-400">(06)</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2">
+      
+      <!-- Card 1 -->
+      <div onclick="openSwiss('charizard')" class="bg-swiss-card border border-swiss-border p-2.5 cursor-pointer flex flex-col justify-between group active:bg-black transition-colors">
+        <div>
+          <div class="flex justify-between items-start mb-1.5 font-mono text-[8px]">
+            <span class="text-swiss-red font-bold">#01 / FUOCO</span>
+            <span class="text-white">TIER 1</span>
+          </div>
+          <div class="aspect-[4/3] bg-black p-1 flex items-center justify-center mb-2 border border-swiss-border">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+          </div>
+          <h3 class="font-bold text-xs text-white uppercase leading-tight">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-swiss-border flex justify-between items-center font-mono text-[9px]">
+          <span class="text-swiss-gray">RATING:</span>
+          <span class="text-swiss-red font-bold">5.0 / 5</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openSwiss('gardevoir')" class="bg-swiss-card border border-swiss-border p-2.5 cursor-pointer flex flex-col justify-between group active:bg-black transition-colors">
+        <div>
+          <div class="flex justify-between items-start mb-1.5 font-mono text-[8px]">
+            <span class="text-purple-400 font-bold">#02 / PSICO</span>
+            <span class="text-white">CONTROL</span>
+          </div>
+          <div class="aspect-[4/3] bg-black p-1 flex items-center justify-center mb-2 border border-swiss-border">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+          </div>
+          <h3 class="font-bold text-xs text-white uppercase leading-tight">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-swiss-border flex justify-between items-center font-mono text-[9px]">
+          <span class="text-swiss-gray">RATING:</span>
+          <span class="text-purple-400 font-bold">4.8 / 5</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openSwiss('dragapult')" class="bg-swiss-card border border-swiss-border p-2.5 cursor-pointer flex flex-col justify-between group active:bg-black transition-colors">
+        <div>
+          <div class="flex justify-between items-start mb-1.5 font-mono text-[8px]">
+            <span class="text-teal-400 font-bold">#03 / DRAGO</span>
+            <span class="text-white">SPREAD</span>
+          </div>
+          <div class="aspect-[4/3] bg-black p-1 flex items-center justify-center mb-2 border border-swiss-border">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+          </div>
+          <h3 class="font-bold text-xs text-white uppercase leading-tight">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-swiss-border flex justify-between items-center font-mono text-[9px]">
+          <span class="text-swiss-gray">RATING:</span>
+          <span class="text-teal-400 font-bold">4.9 / 5</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openSwiss('ragingbolt')" class="bg-swiss-card border border-swiss-border p-2.5 cursor-pointer flex flex-col justify-between group active:bg-black transition-colors">
+        <div>
+          <div class="flex justify-between items-start mb-1.5 font-mono text-[8px]">
+            <span class="text-amber-400 font-bold">#04 / ANTICO</span>
+            <span class="text-white">TURBO</span>
+          </div>
+          <div class="aspect-[4/3] bg-black p-1 flex items-center justify-center mb-2 border border-swiss-border">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+          </div>
+          <h3 class="font-bold text-xs text-white uppercase leading-tight">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-swiss-border flex justify-between items-center font-mono text-[9px]">
+          <span class="text-swiss-gray">RATING:</span>
+          <span class="text-amber-400 font-bold">4.9 / 5</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openSwiss('lugia')" class="bg-swiss-card border border-swiss-border p-2.5 cursor-pointer flex flex-col justify-between group active:bg-black transition-colors">
+        <div>
+          <div class="flex justify-between items-start mb-1.5 font-mono text-[8px]">
+            <span class="text-blue-400 font-bold">#05 / INCOLORE</span>
+            <span class="text-white">TURBO</span>
+          </div>
+          <div class="aspect-[4/3] bg-black p-1 flex items-center justify-center mb-2 border border-swiss-border">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+          </div>
+          <h3 class="font-bold text-xs text-white uppercase leading-tight">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-swiss-border flex justify-between items-center font-mono text-[9px]">
+          <span class="text-swiss-gray">RATING:</span>
+          <span class="text-blue-400 font-bold">4.6 / 5</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openSwiss('miraidon')" class="bg-swiss-card border border-swiss-border p-2.5 cursor-pointer flex flex-col justify-between group active:bg-black transition-colors">
+        <div>
+          <div class="flex justify-between items-start mb-1.5 font-mono text-[8px]">
+            <span class="text-yellow-400 font-bold">#06 / ELETTRO</span>
+            <span class="text-white">PRIZE+</span>
+          </div>
+          <div class="aspect-[4/3] bg-black p-1 flex items-center justify-center mb-2 border border-swiss-border">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+          </div>
+          <h3 class="font-bold text-xs text-white uppercase leading-tight">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-swiss-border flex justify-between items-center font-mono text-[9px]">
+          <span class="text-swiss-gray">RATING:</span>
+          <span class="text-yellow-400 font-bold">4.7 / 5</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-swiss-black/95 backdrop-blur-md border-t border-swiss-border py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between font-mono text-[10px] uppercase">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-swiss-red">
+        <span class="text-sm font-bold">01</span>
+        <span>MAZZI</span>
+      </button>
+      <button onclick="showToast('COMALA: CORSO FERRUCCI 65/A')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-sm font-bold">02</span>
+        <span>COMALA</span>
+      </button>
+      <button onclick="showToast('STANDARD FORMAT [F][G][H]')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-sm font-bold">03</span>
+        <span>META</span>
+      </button>
+      <button onclick="showToast('SINOIRA GANG TORINO')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-sm font-bold">04</span>
+        <span>CLUB</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Swiss Slide-up Drawer -->
+  <div id="swiss-overlay" onclick="closeSwiss()" class="fixed inset-0 z-50 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="swiss-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-swiss-card border-t border-swiss-border max-w-md mx-auto p-4 space-y-3 font-mono transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-swiss-border pb-2">
+      <span id="sw-badge" class="text-swiss-red font-bold text-xs">[DECK SPEC]</span>
+      <button onclick="closeSwiss()" class="text-white font-bold text-xs">[CHIUDI X]</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="sw-img" src="" class="w-16 bg-black p-1 border border-swiss-border">
+      <div class="space-y-1">
+        <h3 id="sw-title" class="font-sans font-bold text-sm uppercase text-white">Title</h3>
+        <p id="sw-desc" class="text-[11px] text-slate-400">Descrizione...</p>
+      </div>
+    </div>
+
+    <button onclick="copySwissCode()" class="w-full bg-swiss-red hover:bg-red-600 text-white font-mono font-bold text-xs py-3 uppercase tracking-wider">
+      EXPORT TCG LIVE STRING
+    </button>
+  </div>
+
+  <script>
+    const sDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "[FUOCO • TIER 1]", desc: "Setup costante con Quick Search e scaling danni ad alto potenziale.", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "[PSICO • CONTROL]", desc: "Manipolazione energie dal cimitero e finish ad alto danno.", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult / Dusknoir", badge: "[DRAGO • SPREAD]", desc: "Pressione simultanea su Pokémon attivo e panchina nemica.", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "[ANTICO • AGGRO]", desc: "Danni illimitati tramite scarto accelerato di energie verdi.", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "[INCOLORE • TURBO]", desc: "Accelerazione quadrupla di energie speciali a ogni turno.", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "[ELETTRO • PRIZE+]", desc: "Generatore istantaneo di Pokémon base e presa premi maggiorata.", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeSwiss = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none'), 2000);
+    }
+
+    function openSwiss(k) {
+      activeSwiss = k;
+      const d = sDecks[k];
+      document.getElementById('sw-title').innerText = d.title;
+      document.getElementById('sw-badge').innerText = d.badge;
+      document.getElementById('sw-desc').innerText = d.desc;
+      document.getElementById('sw-img').src = d.img;
+      document.getElementById('swiss-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('swiss-sheet').classList.add('sheet-open');
+    }
+
+    function closeSwiss() {
+      document.getElementById('swiss-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('swiss-sheet').classList.remove('sheet-open');
+    }
+
+    function copySwissCode() {
+      navigator.clipboard.writeText("TCG LIVE EXPORT FOR " + sDecks[activeSwiss].title);
+      showToast("SYSTEM: STRINGA COPIATA");
+      closeSwiss();
+    }
+
+    function authMember() {
+      const e = prompt("Email socio autorizzato:");
+      if (e) showToast("ACCESSO: " + e.toUpperCase());
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 3: Torino Underground (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+          },
+          colors: {
+            street: {
+              black: '#0a0c0f',
+              dark: '#14171e',
+              card: '#1c202a',
+              red: '#ff3344',
+              orange: '#ff6b35',
+              volt: '#d4ff00',
+              border: '#2a303f'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0a0c0f;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .marquee {
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-street-red selection:text-black">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-street-volt text-black font-mono font-bold text-xs px-5 py-2.5 shadow-2xl transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span id="toast-msg">LISTA COPIATA! 💥</span>
+  </div>
+
+  <!-- Marquee Ticker Top -->
+  <div class="bg-street-red text-black py-1 overflow-hidden font-syne font-black text-[10px] uppercase tracking-wider flex">
+    <div class="marquee flex gap-6 shrink-0">
+      <span>• SINOIRA GANG • MAZZI GRATIS OGNI LUNEDÌ @ COMALA • ZERO PAY TO WIN • SUPER SMASH BROS • TORINO CASUAL TCG</span>
+      <span>• SINOIRA GANG • MAZZI GRATIS OGNI LUNEDÌ @ COMALA • ZERO PAY TO WIN • SUPER SMASH BROS • TORINO CASUAL TCG</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-street-black/95 backdrop-blur-md border-b border-street-border px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-street-red p-0.5 border border-white flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full">
+        </div>
+        <span class="font-syne font-black text-lg text-white tracking-tight">SINOIRA<span class="text-street-red">GANG</span></span>
+      </div>
+
+      <button onclick="streetLogin()" class="bg-street-volt hover:bg-lime-300 text-black font-syne font-black text-[11px] px-3.5 py-1.5 uppercase tracking-wider">
+        Soci
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Street Hero Card -->
+    <section class="bg-street-dark border border-street-border p-4 rounded-2xl space-y-3 relative overflow-hidden">
+      <div class="inline-block bg-street-card border border-street-border px-2.5 py-0.5 text-[10px] font-mono text-street-volt uppercase">
+        TORINO COMMUNITY • NO COST
+      </div>
+
+      <h1 class="font-syne font-black text-2xl uppercase leading-none text-white">
+        IL CLUB DOVE <br>
+        <span class="text-street-red underline decoration-street-volt">LE CARTE POKÉMON</span> <br>
+        SONO GRATIS.
+      </h1>
+
+      <p class="text-xs text-slate-300 font-medium leading-relaxed">
+        Niente collezionisti tossici. Solo serate tra amici, birretta al Comala e mazzi completi da giocare subito.
+      </p>
+
+      <div class="bg-black/50 p-2.5 border border-street-border flex justify-between items-center text-xs font-mono">
+        <span class="text-street-volt">📍 Comala, C.so Ferrucci</span>
+        <span class="text-white font-bold">Lunedì 20:30</span>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-syne font-black text-base text-white uppercase">Mazzi Pronti (6)</h2>
+      <span class="text-[10px] font-mono text-slate-400">Tocca per lista</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openStreet('charizard')" class="bg-street-dark border border-street-border hover:border-street-red p-2.5 rounded-xl cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black border border-street-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-street-red text-white text-[8px] font-mono font-bold px-1.5 py-0.5">TIER 1</span>
+          </div>
+          <span class="text-[9px] font-mono text-street-orange uppercase font-bold">Fuoco • Setup</span>
+          <h3 class="font-syne font-black text-xs text-white leading-tight mt-0.5">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-street-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-street-volt">★ 5.0</span>
+          <span class="text-white font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openStreet('gardevoir')" class="bg-street-dark border border-street-border hover:border-purple-500 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black border border-street-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-purple-600 text-white text-[8px] font-mono font-bold px-1.5 py-0.5">COMBO</span>
+          </div>
+          <span class="text-[9px] font-mono text-purple-400 uppercase font-bold">Psico • Trick</span>
+          <h3 class="font-syne font-black text-xs text-white leading-tight mt-0.5">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-street-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-street-volt">★ 4.8</span>
+          <span class="text-white font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openStreet('dragapult')" class="bg-street-dark border border-street-border hover:border-teal-500 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black border border-street-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-teal-500 text-black text-[8px] font-mono font-bold px-1.5 py-0.5">SPREAD</span>
+          </div>
+          <span class="text-[9px] font-mono text-teal-400 uppercase font-bold">Drago • Snipe</span>
+          <h3 class="font-syne font-black text-xs text-white leading-tight mt-0.5">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-street-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-street-volt">★ 4.9</span>
+          <span class="text-white font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openStreet('ragingbolt')" class="bg-street-dark border border-street-border hover:border-amber-500 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black border border-street-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-amber-500 text-black text-[8px] font-mono font-bold px-1.5 py-0.5">AGGRO</span>
+          </div>
+          <span class="text-[9px] font-mono text-amber-400 uppercase font-bold">Antico • Turbo</span>
+          <h3 class="font-syne font-black text-xs text-white leading-tight mt-0.5">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-street-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-street-volt">★ 4.9</span>
+          <span class="text-white font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openStreet('lugia')" class="bg-street-dark border border-street-border hover:border-blue-500 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black border border-street-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-blue-500 text-white text-[8px] font-mono font-bold px-1.5 py-0.5">VSTAR</span>
+          </div>
+          <span class="text-[9px] font-mono text-blue-400 uppercase font-bold">Incolore • Turbo</span>
+          <h3 class="font-syne font-black text-xs text-white leading-tight mt-0.5">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-street-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-street-volt">★ 4.6</span>
+          <span class="text-white font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openStreet('miraidon')" class="bg-street-dark border border-street-border hover:border-yellow-400 p-2.5 rounded-xl cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black border border-street-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-yellow-400 text-black text-[8px] font-mono font-bold px-1.5 py-0.5">PRIZE+</span>
+          </div>
+          <span class="text-[9px] font-mono text-yellow-400 uppercase font-bold">Elettro • Generator</span>
+          <h3 class="font-syne font-black text-xs text-white leading-tight mt-0.5">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-street-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-street-volt">★ 4.7</span>
+          <span class="text-white font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-street-black/95 backdrop-blur-md border-t border-street-border py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-syne font-bold uppercase tracking-wider">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-street-red">
+        <span class="text-base">🎴</span>
+        <span class="text-[9px]">Mazzi</span>
+      </button>
+      <button onclick="showToast('Comala: Corso Ferrucci 65/a, Torino')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">📍</span>
+        <span class="text-[9px]">Comala</span>
+      </button>
+      <button onclick="showToast('Rotazione Standard [F][G][H]')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">⚡</span>
+        <span class="text-[9px]">Meta</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Associazione Torino')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-base">🏴</span>
+        <span class="text-[9px]">Manifesto</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Street Slide-up Drawer -->
+  <div id="street-overlay" onclick="closeStreet()" class="fixed inset-0 z-50 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="street-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-street-dark border-t-4 border-street-red max-w-md mx-auto p-4 space-y-3 transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-street-border pb-2">
+      <span id="st-badge" class="font-mono text-[9px] bg-street-volt text-black font-bold px-2 py-0.5">TIER 1</span>
+      <button onclick="closeStreet()" class="bg-street-red text-white font-syne font-bold text-xs px-2.5 py-0.5">X</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="st-img" src="" class="w-16 bg-black p-1 border border-street-border">
+      <div>
+        <h3 id="st-title" class="font-syne font-black text-sm text-white uppercase">Title</h3>
+        <p id="st-desc" class="text-[11px] text-slate-300 font-mono mt-1">Descrizione...</p>
+      </div>
+    </div>
+
+    <button onclick="copyStreetCode()" class="w-full bg-street-red hover:bg-red-600 text-white font-syne font-black text-xs py-3 uppercase tracking-wider">
+      📋 Copia Stringa TCG Live
+    </button>
+  </div>
+
+  <script>
+    const stDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "TIER 1 META", desc: "La combo classica: cerca ogni risorsa con Pidgeot e colpisci duro con Charizard!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "CONTROL TRICK", desc: "Rianima energie infinite dal cimitero per colpi decisivi!", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult ex / Dusknoir", badge: "SPREAD DAMAGE", desc: "Danni sul Pokémon attivo e cecchinaggio continuo in panchina!", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "HYPER AGGRO", desc: "Scarta energie per danni illimitati fin dal turno 1!", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "SPECIAL TURBO", desc: "Carica 4 energie speciali all'istante con Archeops.", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "AMP EXTRA PRIZE", desc: "Prendi premi extra sui Pokémon base nemici.", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeSt = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openStreet(k) {
+      activeSt = k;
+      const d = stDecks[k];
+      document.getElementById('st-title').innerText = d.title;
+      document.getElementById('st-badge').innerText = d.badge;
+      document.getElementById('st-desc').innerText = d.desc;
+      document.getElementById('st-img').src = d.img;
+      document.getElementById('street-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('street-sheet').classList.add('sheet-open');
+    }
+
+    function closeStreet() {
+      document.getElementById('street-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('street-sheet').classList.remove('sheet-open');
+    }
+
+    function copyStreetCode() {
+      navigator.clipboard.writeText("TCG Live list for " + stDecks[activeSt].title);
+      showToast("LISTA TCG LIVE COPIATA!");
+      closeStreet();
+    }
+
+    function streetLogin() {
+      const e = prompt("Email socio Sinoira:");
+      if (e) showToast("BENVENUTO " + e.toUpperCase());
+    }
+  </script>
+</body>
+</html>

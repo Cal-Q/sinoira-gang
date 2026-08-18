@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 8: Manga Speedlines (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Chakra+Petch:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            manga: ['Bangers', 'cursive'],
+            cyber: ['"Chakra Petch"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            manga: {
+              neonRed: '#ff0055',
+              cyan: '#00f0ff',
+              yellow: '#ffe600',
+              dark: '#0a0a0f',
+              card: '#13131c',
+              border: '#28283d'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #08080c;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .manga-btn {
+      box-shadow: 2px 2px 0px #ff0055;
+    }
+    .manga-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px #ff0055;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-manga-cyan selection:text-black">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-manga-yellow text-black border-2 border-black px-4 py-2 font-cyber font-bold text-xs shadow-2xl transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span id="toast-msg">🔥 DECK CODE ACQUISITO!</span>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-manga-dark/95 backdrop-blur-md border-b-2 border-manga-neonRed px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-manga-neonRed p-0.5 border border-white -rotate-3 flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="font-manga text-lg tracking-wider text-white block leading-none">SINOIRA GANG</span>
+          <span class="font-cyber font-bold text-[9px] text-manga-cyan uppercase">TORINO BATTLE CLUB</span>
+        </div>
+      </div>
+
+      <button onclick="mangaLogin()" class="bg-manga-neonRed text-white font-manga text-xs px-3 py-1 uppercase tracking-wider border border-black manga-btn">
+        Entra!
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Action Hero Banner -->
+    <section class="bg-manga-card border-2 border-black p-3.5 manga-btn space-y-2 relative overflow-hidden">
+      <div class="inline-block bg-manga-yellow text-black font-cyber font-black text-[9px] px-2 py-0.5 uppercase">
+        ⚡ 100% FREE DECKS • NO PAY TO WIN
+      </div>
+
+      <h1 class="font-manga text-2xl text-white uppercase leading-none">
+        ENTRA IN BATTAGLIA. <br>
+        <span class="text-manga-cyan">IL MAZZO TE LO DIAMO NOI!</span>
+      </h1>
+
+      <p class="text-slate-300 text-xs font-cyber leading-relaxed">
+        Ogni lunedì sera al Comala di Torino: partite Pokémon TCG con mazzi pronti e sfide a Super Smash Bros!
+      </p>
+
+      <div class="bg-black/60 p-2 border border-slate-700 flex justify-between items-center font-cyber text-[11px]">
+        <span class="text-manga-yellow">📍 Comala, Torino</span>
+        <span class="text-white font-bold">Lunedì 20:30</span>
+      </div>
+    </section>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-manga text-base text-white tracking-wide">Battle Decks (6)</h2>
+      <span class="font-cyber text-[10px] text-manga-cyan font-bold">Tocca per dettagli</span>
+    </div>
+
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openManga('charizard')" class="bg-manga-card border-2 border-black p-2.5 manga-btn cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-black/60 border border-slate-700 p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-manga-neonRed text-white font-manga text-[9px] px-1.5 py-0.2">TIER 1</span>
+          </div>
+          <span class="font-cyber text-[9px] text-manga-yellow font-bold uppercase">Fuoco • Combo</span>
+          <h3 class="font-manga text-sm text-white leading-tight mt-0.5">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-700 flex justify-between items-center font-cyber text-[10px]">
+          <span class="text-manga-yellow font-bold">PWR: 100</span>
+          <span class="text-manga-cyan font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openManga('gardevoir')" class="bg-manga-card border-2 border-black p-2.5 manga-btn cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-black/60 border border-slate-700 p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-purple-600 text-white font-manga text-[9px] px-1.5 py-0.2">COMBO</span>
+          </div>
+          <span class="font-cyber text-[9px] text-purple-400 font-bold uppercase">Psico • Trick</span>
+          <h3 class="font-manga text-sm text-white leading-tight mt-0.5">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-700 flex justify-between items-center font-cyber text-[10px]">
+          <span class="text-purple-400 font-bold">PWR: 95</span>
+          <span class="text-manga-cyan font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openManga('dragapult')" class="bg-manga-card border-2 border-black p-2.5 manga-btn cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-black/60 border border-slate-700 p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-teal-500 text-black font-manga text-[9px] px-1.5 py-0.2">SPREAD</span>
+          </div>
+          <span class="font-cyber text-[9px] text-teal-400 font-bold uppercase">Drago • Snipe</span>
+          <h3 class="font-manga text-sm text-white leading-tight mt-0.5">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-700 flex justify-between items-center font-cyber text-[10px]">
+          <span class="text-teal-400 font-bold">PWR: 98</span>
+          <span class="text-manga-cyan font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openManga('ragingbolt')" class="bg-manga-card border-2 border-black p-2.5 manga-btn cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-black/60 border border-slate-700 p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-amber-500 text-black font-manga text-[9px] px-1.5 py-0.2">AGGRO</span>
+          </div>
+          <span class="font-cyber text-[9px] text-amber-400 font-bold uppercase">Antico • Aggro</span>
+          <h3 class="font-manga text-sm text-white leading-tight mt-0.5">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-700 flex justify-between items-center font-cyber text-[10px]">
+          <span class="text-amber-400 font-bold">PWR: 99</span>
+          <span class="text-manga-cyan font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openManga('lugia')" class="bg-manga-card border-2 border-black p-2.5 manga-btn cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-black/60 border border-slate-700 p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-blue-500 text-white font-manga text-[9px] px-1.5 py-0.2">VSTAR</span>
+          </div>
+          <span class="font-cyber text-[9px] text-blue-400 font-bold uppercase">Incolore • Turbo</span>
+          <h3 class="font-manga text-sm text-white leading-tight mt-0.5">Lugia VSTAR / Turbo</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-700 flex justify-between items-center font-cyber text-[10px]">
+          <span class="text-blue-400 font-bold">PWR: 92</span>
+          <span class="text-manga-cyan font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openManga('miraidon')" class="bg-manga-card border-2 border-black p-2.5 manga-btn cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform">
+        <div>
+          <div class="aspect-square bg-black/60 border border-slate-700 p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-yellow-400 text-black font-manga text-[9px] px-1.5 py-0.2">PRIZE+</span>
+          </div>
+          <span class="font-cyber text-[9px] text-yellow-400 font-bold uppercase">Elettro • Bench</span>
+          <h3 class="font-manga text-sm text-white leading-tight mt-0.5">Miraidon ex / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-slate-700 flex justify-between items-center font-cyber text-[10px]">
+          <span class="text-yellow-400 font-bold">PWR: 94</span>
+          <span class="text-manga-cyan font-bold">VEDI ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-manga-dark/95 backdrop-blur-md border-t border-slate-800 py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between font-cyber text-[10px] font-bold uppercase">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-0.5 text-manga-neonRed">
+        <span class="text-sm">💥</span>
+        <span>Decks</span>
+      </button>
+      <button onclick="showToast('Comala: Corso Ferrucci 65/a, Torino')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-sm">⚡</span>
+        <span>Arena</span>
+      </button>
+      <button onclick="showToast('Regolamento Standard [F][G][H]')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-sm">⚔️</span>
+        <span>Meta</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Torino Battle Club')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-white">
+        <span class="text-sm">💬</span>
+        <span>Club</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Manga Slide-up Drawer -->
+  <div id="manga-overlay" onclick="closeManga()" class="fixed inset-0 z-50 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="manga-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-manga-card border-t-4 border-manga-neonRed max-w-md mx-auto p-4 space-y-3 font-cyber transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+      <span id="mm-badge" class="font-cyber font-black text-[9px] bg-manga-yellow text-black px-2 py-0.5">TIER 1</span>
+      <button onclick="closeManga()" class="bg-manga-neonRed text-white font-manga text-xs px-2.5 py-0.5">X</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="mm-img" src="" class="w-16 bg-black p-1 border border-slate-700">
+      <div>
+        <h3 id="mm-title" class="font-manga text-lg text-white">Title</h3>
+        <p id="mm-desc" class="text-[11px] text-slate-300 mt-0.5 leading-snug">Descrizione...</p>
+      </div>
+    </div>
+
+    <button onclick="copyMangaCode()" class="w-full bg-manga-cyan hover:bg-cyan-400 text-black font-manga text-sm py-2.5 uppercase tracking-wider border-2 border-black manga-btn">
+      💥 Copia Stringa TCG Live
+    </button>
+  </div>
+
+  <script>
+    const mDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "TIER 1 META", desc: "Tattica esplosiva: Quick Search trova ogni risorsa necessaria e Charizard travolge l'avversario!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "CONTROL TRICK", desc: "Accumulo di energie psichiche e attacco da 360 danni con Drifloon!", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult / Dusknoir", badge: "SPREAD DAMAGE", desc: "Bombardamento a tappeto sul Pokémon attivo e sui panchinari nemici!", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "HYPER AGGRO", desc: "Attacco istantaneo turno 1 con scarto di tutte le energie per il KO!", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "SPECIAL TURBO", desc: "Evoca 2 Archeops e accelera 4 energie speciali all'istante.", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "FAST ELECTRIC", desc: "Riempi la panchina con Tandem Unit e incassa premi extra!", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeM = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openManga(k) {
+      activeM = k;
+      const d = mDecks[k];
+      document.getElementById('mm-title').innerText = d.title;
+      document.getElementById('mm-badge').innerText = d.badge;
+      document.getElementById('mm-desc').innerText = d.desc;
+      document.getElementById('mm-img').src = d.img;
+      document.getElementById('manga-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('manga-sheet').classList.add('sheet-open');
+    }
+
+    function closeManga() {
+      document.getElementById('manga-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('manga-sheet').classList.remove('sheet-open');
+    }
+
+    function copyMangaCode() {
+      navigator.clipboard.writeText("TCG Live list for " + mDecks[activeM].title);
+      showToast("🔥 DECK CODE COPIATO!");
+      closeManga();
+    }
+
+    function mangaLogin() {
+      const e = prompt("Email giocatore:");
+      if (e) showToast("BENVENUTO " + e.toUpperCase() + " ⚡");
+    }
+  </script>
+</body>
+</html>

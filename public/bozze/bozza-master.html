@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Master Fusion (Layout 5 + Stile 6)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+          },
+          colors: {
+            master: {
+              bg: '#0a0b0e',
+              surface: '#12141a',
+              card: 'rgba(22, 25, 33, 0.85)',
+              gold: '#d4af37',
+              goldLight: '#f6e7b0',
+              goldDark: '#9a7b1c',
+              accent: '#e63946',
+              border: 'rgba(212, 175, 55, 0.25)',
+              borderLight: 'rgba(255, 255, 255, 0.08)',
+              green: '#2ed573'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0a0b0e;
+      color: #f1f2f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+      background-image: radial-gradient(#1a1d26 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .gold-foil {
+      background: linear-gradient(135deg, #f6e7b0 0%, #d4af37 50%, #aa820a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .gold-border-glow {
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 4px 20px -4px rgba(212, 175, 55, 0.15);
+    }
+    
+    .holo-sheen {
+      position: relative;
+      overflow: hidden;
+    }
+    .holo-sheen::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.12) 48%,
+        rgba(212, 175, 55, 0.2) 50%,
+        rgba(0, 245, 212, 0.15) 52%,
+        transparent 65%
+      );
+      transform: rotate(25deg);
+      transition: transform 0.6s ease;
+      pointer-events-none;
+    }
+    .holo-sheen:active::after, .holo-sheen:hover::after {
+      transform: rotate(25deg) translate(20%, 20%);
+    }
+
+    .master-dock {
+      background: rgba(16, 18, 24, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    .bottom-sheet {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-28 selection:bg-master-gold selection:text-black">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 master-dock text-master-goldLight px-5 py-2.5 rounded-full text-xs font-bold shadow-2xl flex items-center gap-2 transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span class="w-2 h-2 rounded-full bg-master-gold animate-ping"></span>
+    <span id="toast-msg">Decklist copiata con successo! 📋</span>
+  </div>
+
+  <!-- Dynamic Island (Disposizione Bozza 5 + Stile Bozza 6) -->
+  <div class="sticky top-2 z-40 max-w-sm mx-auto px-4">
+    <div class="master-dock rounded-full py-1.5 px-4 shadow-2xl flex items-center justify-between text-xs gold-border-glow">
+      <div class="flex items-center gap-2">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+        </span>
+        <span class="font-cinzel font-bold text-white tracking-wide">Comala Live</span>
+      </div>
+      <span class="text-master-gold font-mono font-bold text-[11px]">Lunedì 20:30 • 6 Mazzi Free</span>
+    </div>
+  </div>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-4 space-y-4">
+
+    <!-- Top App Header -->
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl overflow-hidden p-0.5 bg-gradient-to-tr from-master-gold to-amber-200 border border-master-gold/40 shadow-lg flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-lg">
+        </div>
+        <div>
+          <h1 class="font-cinzel font-bold text-base tracking-wider text-white flex items-center gap-1.5 leading-none">
+            <span>SINOIRA GANG</span>
+            <span class="text-[9px] font-mono font-bold gold-foil uppercase border border-master-gold/30 px-1.5 py-0.2 rounded">FOIL</span>
+          </h1>
+          <p class="text-[10px] text-slate-400 font-medium">Torino Pokémon Card Club</p>
+        </div>
+      </div>
+
+      <button onclick="authMember()" class="master-dock hover:bg-white/10 text-master-goldLight border border-master-gold/30 px-3.5 py-1 rounded-full text-xs font-bold transition-all">
+        Area Soci
+      </button>
+    </div>
+
+    <!-- Segmented Control Switcher (Disposizione Bozza 5) -->
+    <div class="master-dock p-1 rounded-2xl flex gap-1 text-xs font-bold">
+      <button onclick="switchTab('mazzi')" id="tab-btn-mazzi" class="flex-1 py-2 rounded-xl bg-gradient-to-r from-master-gold/25 to-amber-500/25 border border-master-gold/40 text-master-goldLight font-cinzel transition-all text-center">🎴 Mazzi (6)</button>
+      <button onclick="switchTab('eventi')" id="tab-btn-eventi" class="flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition-all text-center">📅 Eventi</button>
+      <button onclick="switchTab('meta')" id="tab-btn-meta" class="flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition-all text-center">🔄 Meta</button>
+      <button onclick="switchTab('club')" id="tab-btn-club" class="flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition-all text-center">👥 Club</button>
+    </div>
+
+    <!-- TAB 1: MAZZI (2-Column Pocket Grid Bozza 6) -->
+    <section id="tab-mazzi" class="space-y-3">
+      <div class="flex justify-between items-center">
+        <h2 class="font-cinzel font-bold text-sm text-white uppercase tracking-wider flex items-center gap-1.5">
+          <span>Pocket Sleeves</span>
+          <span class="text-master-gold text-xs font-mono font-bold">(6/6)</span>
+        </h2>
+        <span class="text-[10px] font-mono text-slate-400">Tocca per sleeve</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        
+        <!-- Deck 1 -->
+        <div onclick="openMasterSheet('charizard')" class="master-dock holo-sheen rounded-2xl p-2.5 cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform gold-border-glow">
+          <div>
+            <div class="aspect-[4/3] bg-black/60 rounded-xl p-1.5 flex items-center justify-center mb-2 relative border border-white/5">
+              <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain drop-shadow-md">
+              <span class="absolute top-1 left-1 bg-master-gold text-black text-[8px] font-mono font-bold px-1.5 py-0.2 rounded">FOIL #01</span>
+            </div>
+            <span class="text-[9px] font-mono text-amber-400 font-bold uppercase block">Fuoco • Tier 1</span>
+            <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5 group-hover:text-master-goldLight transition-colors">Charizard ex / Pidgeot</h3>
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
+            <span class="text-master-gold">★★★★★</span>
+            <span class="text-slate-400 group-hover:text-master-gold font-bold">Apri ➔</span>
+          </div>
+        </div>
+
+        <!-- Deck 2 -->
+        <div onclick="openMasterSheet('gardevoir')" class="master-dock holo-sheen rounded-2xl p-2.5 cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform gold-border-glow">
+          <div>
+            <div class="aspect-[4/3] bg-black/60 rounded-xl p-1.5 flex items-center justify-center mb-2 relative border border-white/5">
+              <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain drop-shadow-md">
+              <span class="absolute top-1 left-1 bg-purple-500 text-white text-[8px] font-mono font-bold px-1.5 py-0.2 rounded">FOIL #02</span>
+            </div>
+            <span class="text-[9px] font-mono text-purple-400 font-bold uppercase block">Psico • Control</span>
+            <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5 group-hover:text-purple-300 transition-colors">Gardevoir ex / Drifloon</h3>
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
+            <span class="text-master-gold">★★★★★</span>
+            <span class="text-slate-400 group-hover:text-purple-300 font-bold">Apri ➔</span>
+          </div>
+        </div>
+
+        <!-- Deck 3 -->
+        <div onclick="openMasterSheet('dragapult')" class="master-dock holo-sheen rounded-2xl p-2.5 cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform gold-border-glow">
+          <div>
+            <div class="aspect-[4/3] bg-black/60 rounded-xl p-1.5 flex items-center justify-center mb-2 relative border border-white/5">
+              <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain drop-shadow-md">
+              <span class="absolute top-1 left-1 bg-teal-500 text-black text-[8px] font-mono font-bold px-1.5 py-0.2 rounded">FOIL #03</span>
+            </div>
+            <span class="text-[9px] font-mono text-teal-400 font-bold uppercase block">Drago • Snipe</span>
+            <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5 group-hover:text-teal-300 transition-colors">Dragapult / Dusknoir</h3>
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
+            <span class="text-master-gold">★★★★★</span>
+            <span class="text-slate-400 group-hover:text-teal-300 font-bold">Apri ➔</span>
+          </div>
+        </div>
+
+        <!-- Deck 4 -->
+        <div onclick="openMasterSheet('ragingbolt')" class="master-dock holo-sheen rounded-2xl p-2.5 cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform gold-border-glow">
+          <div>
+            <div class="aspect-[4/3] bg-black/60 rounded-xl p-1.5 flex items-center justify-center mb-2 relative border border-white/5">
+              <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain drop-shadow-md">
+              <span class="absolute top-1 left-1 bg-amber-500 text-black text-[8px] font-mono font-bold px-1.5 py-0.2 rounded">FOIL #04</span>
+            </div>
+            <span class="text-[9px] font-mono text-amber-400 font-bold uppercase block">Antico • Aggro</span>
+            <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5 group-hover:text-amber-300 transition-colors">Raging Bolt / Ogerpon</h3>
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
+            <span class="text-master-gold">★★★★★</span>
+            <span class="text-slate-400 group-hover:text-amber-300 font-bold">Apri ➔</span>
+          </div>
+        </div>
+
+        <!-- Deck 5 -->
+        <div onclick="openMasterSheet('lugia')" class="master-dock holo-sheen rounded-2xl p-2.5 cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform gold-border-glow">
+          <div>
+            <div class="aspect-[4/3] bg-black/60 rounded-xl p-1.5 flex items-center justify-center mb-2 relative border border-white/5">
+              <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain drop-shadow-md">
+              <span class="absolute top-1 left-1 bg-blue-500 text-white text-[8px] font-mono font-bold px-1.5 py-0.2 rounded">FOIL #05</span>
+            </div>
+            <span class="text-[9px] font-mono text-blue-400 font-bold uppercase block">Incolore • Turbo</span>
+            <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5 group-hover:text-blue-300 transition-colors">Lugia VSTAR / Turbo</h3>
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
+            <span class="text-master-gold">★★★★☆</span>
+            <span class="text-slate-400 group-hover:text-blue-300 font-bold">Apri ➔</span>
+          </div>
+        </div>
+
+        <!-- Deck 6 -->
+        <div onclick="openMasterSheet('miraidon')" class="master-dock holo-sheen rounded-2xl p-2.5 cursor-pointer flex flex-col justify-between group active:scale-95 transition-transform gold-border-glow">
+          <div>
+            <div class="aspect-[4/3] bg-black/60 rounded-xl p-1.5 flex items-center justify-center mb-2 relative border border-white/5">
+              <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain drop-shadow-md">
+              <span class="absolute top-1 left-1 bg-yellow-400 text-black text-[8px] font-mono font-bold px-1.5 py-0.2 rounded">FOIL #06</span>
+            </div>
+            <span class="text-[9px] font-mono text-yellow-400 font-bold uppercase block">Elettro • Generator</span>
+            <h3 class="font-cinzel font-bold text-xs text-white leading-tight mt-0.5 group-hover:text-yellow-300 transition-colors">Miraidon ex / Hands</h3>
+          </div>
+          <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
+            <span class="text-master-gold">★★★★★</span>
+            <span class="text-slate-400 group-hover:text-yellow-300 font-bold">Apri ➔</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: EVENTI (Comala Agenda) -->
+    <section id="tab-eventi" class="hidden space-y-3">
+      <h2 class="font-cinzel font-bold text-sm text-white uppercase tracking-wider">Programma Incontri Comala</h2>
+      
+      <div class="space-y-2.5">
+        <div class="master-dock rounded-2xl p-3.5 gold-border-glow flex justify-between items-center">
+          <div>
+            <span class="text-[10px] font-mono font-bold gold-foil block">OGNI LUNEDÌ • 20:30</span>
+            <h3 class="font-bold text-xs text-white">Pokémon TCG Free Play & Mazzi</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">Distribuzione mazzi gratuiti, spiegazione regole e partite amichevoli.</p>
+          </div>
+          <span class="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-lg border border-emerald-400/20">Open</span>
+        </div>
+
+        <div class="master-dock rounded-2xl p-3.5 gold-border-glow flex justify-between items-center">
+          <div>
+            <span class="text-[10px] font-mono font-bold text-amber-400 block">MERCOLEDÌ • 21:00</span>
+            <h3 class="font-bold text-xs text-white">Super Smash Bros Night</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">Setup per Nintendo Switch e tornei amichevoli casual.</p>
+          </div>
+          <span class="text-[10px] font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-lg border border-blue-400/20">3 Monitor</span>
+        </div>
+
+        <div class="master-dock rounded-2xl p-3.5 gold-border-glow flex justify-between items-center">
+          <div>
+            <span class="text-[10px] font-mono font-bold text-purple-400 block">FINE MESE</span>
+            <h3 class="font-bold text-xs text-white">Torneo Svizzera Friendly</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">Bustine promo e carte speciali per tutti i partecipanti.</p>
+          </div>
+          <span class="text-[10px] font-bold text-master-gold bg-master-gold/10 px-2 py-1 rounded-lg border border-master-gold/20">Prizes</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: META ROTAZIONE -->
+    <section id="tab-meta" class="hidden master-dock rounded-2xl p-4 space-y-3 gold-border-glow text-xs">
+      <div class="flex justify-between items-center border-b border-white/10 pb-2">
+        <span class="font-cinzel font-bold text-white text-sm">Formato Standard Ufficiale</span>
+        <span class="font-mono text-master-gold font-bold text-[10px]">[F] [G] [H]</span>
+      </div>
+      <p class="text-slate-300 text-xs leading-relaxed">
+        Tutti i 6 mazzi fisici forniti dall'associazione sono rigorosamente aggiornati all'ultima rotazione standard ufficiale. Puoi usarli subito per giocare sia alle nostre serate amichevoli che nei tornei locali.
+      </p>
+      <div class="bg-black/50 p-2.5 rounded-xl border border-white/10 flex justify-between items-center text-[11px] font-mono">
+        <span class="text-slate-400">Top 32 Meta TCG:</span>
+        <span class="text-emerald-400 font-bold">100% Conforme</span>
+      </div>
+    </section>
+
+    <!-- TAB 4: CLUB SINOIRA -->
+    <section id="tab-club" class="hidden master-dock rounded-2xl p-4 space-y-3 gold-border-glow text-xs">
+      <span class="font-cinzel font-bold text-white text-sm block">Chi Siamo</span>
+      <p class="text-slate-300 text-xs leading-relaxed">
+        Sinoira Gang è un’associazione ludico-culturale nata a Torino per abbattere ogni barriera economica nel gioco di carte Pokémon. Non serve spendere nulla per iniziare: vieni a mani vuote, scegli un mazzo e divertiti con noi!
+      </p>
+      <div class="flex gap-2 pt-1">
+        <a href="https://discord.com" target="_blank" class="flex-1 bg-[#5865F2] hover:bg-indigo-600 text-white font-bold text-center py-2 rounded-xl text-xs">Discord</a>
+        <a href="https://instagram.com" target="_blank" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-center py-2 rounded-xl text-xs">Instagram</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Bottom Glass/Leather Dock (Disposizione Bozza 5 + Stile Bozza 6) -->
+  <nav class="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 master-dock rounded-full px-6 py-2.5 shadow-2xl flex items-center gap-6 text-xs font-bold gold-border-glow">
+    <button onclick="switchTab('mazzi')" id="dock-btn-mazzi" class="text-master-goldLight flex flex-col items-center gap-0.5">
+      <span class="text-sm">🎴</span>
+      <span class="text-[9px] font-cinzel">Mazzi</span>
+    </button>
+    <button onclick="switchTab('eventi')" id="dock-btn-eventi" class="text-slate-400 hover:text-white flex flex-col items-center gap-0.5">
+      <span class="text-sm">📅</span>
+      <span class="text-[9px] font-cinzel">Eventi</span>
+    </button>
+    <button onclick="switchTab('meta')" id="dock-btn-meta" class="text-slate-400 hover:text-white flex flex-col items-center gap-0.5">
+      <span class="text-sm">🔄</span>
+      <span class="text-[9px] font-cinzel">Meta</span>
+    </button>
+    <button onclick="switchTab('club')" id="dock-btn-club" class="text-slate-400 hover:text-white flex flex-col items-center gap-0.5">
+      <span class="text-sm">👥</span>
+      <span class="text-[9px] font-cinzel">Club</span>
+    </button>
+  </nav>
+
+  <!-- Slide-up Master Bottom Sheet (Sleeve Inspector) -->
+  <div id="master-overlay" onclick="closeMasterSheet()" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="master-sheet" class="fixed bottom-0 left-0 right-0 z-50 master-dock rounded-t-3xl max-w-md mx-auto p-5 space-y-4 transform translate-y-full bottom-sheet border-t-2 border-master-gold max-h-[85vh] overflow-y-auto custom-scroll">
+    <!-- Handle -->
+    <div class="w-10 h-1 bg-master-gold/40 rounded-full mx-auto mb-1"></div>
+
+    <div class="flex items-start justify-between">
+      <div class="flex items-center gap-3">
+        <img id="ms-img" src="" class="w-16 h-20 object-contain bg-black/60 rounded-xl p-1 border border-master-gold/40 flex-shrink-0">
+        <div>
+          <span id="ms-badge" class="font-mono text-[9px] gold-foil font-bold uppercase border border-master-gold/30 px-2 py-0.5 rounded-full">FOIL #01</span>
+          <h3 id="ms-title" class="font-cinzel font-bold text-base text-white mt-1">Deck Title</h3>
+          <span id="ms-stars" class="text-xs text-master-gold font-bold">★★★★★</span>
+        </div>
+      </div>
+      <button onclick="closeMasterSheet()" class="bg-white/10 text-white w-7 h-7 rounded-full font-bold flex items-center justify-center">✕</button>
+    </div>
+
+    <p id="ms-desc" class="text-xs text-slate-300 leading-relaxed bg-black/40 p-3 rounded-xl border border-white/5 font-sans">Descrizione...</p>
+
+    <!-- 3-Step Mini Strategy -->
+    <div class="space-y-1.5">
+      <span class="text-[10px] font-mono gold-foil font-bold uppercase tracking-wider block">Strategia in 3 Step:</span>
+      <div class="grid grid-cols-3 gap-1.5 text-[10px]">
+        <div class="bg-black/50 p-2 rounded-xl border border-white/5 text-center space-y-0.5">
+          <span class="font-bold text-master-gold">1. Setup</span>
+          <p class="text-slate-400 text-[9px]">Poffin & Base</p>
+        </div>
+        <div class="bg-black/50 p-2 rounded-xl border border-white/5 text-center space-y-0.5">
+          <span class="font-bold text-master-gold">2. Carica</span>
+          <p class="text-slate-400 text-[9px]">Evolvi & Energie</p>
+        </div>
+        <div class="bg-black/50 p-2 rounded-xl border border-white/5 text-center space-y-0.5">
+          <span class="font-bold text-master-gold">3. Chiusura</span>
+          <p class="text-slate-400 text-[9px]">Prendi i Premi</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TCG Live Copy Action Button -->
+    <button onclick="copyMasterCode()" class="w-full bg-gradient-to-r from-master-gold to-amber-500 hover:from-amber-400 hover:to-amber-600 text-black font-bold text-xs py-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wider">
+      <span>📋 Copia Codice per TCG Live</span>
+    </button>
+  </div>
+
+  <script>
+    const masterDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "FOIL #01 • FUOCO", desc: "La combo classica: cerca ogni risorsa con Quick Search di Pidgeot e infliggi fino a 330 danni con Charizard ex!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png", stars: "★★★★★" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "FOIL #02 • PSICO", desc: "Rianima infinite energie dal cimitero con Psychic Embrace e colpisci per 360 danni con Drifloon!", img: "https://images.pokemontcg.io/sv1/86_hires.png", stars: "★★★★★" },
+      dragapult: { title: "Dragapult / Dusknoir", badge: "FOIL #03 • DRAGO", desc: "200 danni sul Pokémon attivo e 60 danni cecchino a piacere sulla panchina ogni turno!", img: "https://images.pokemontcg.io/sv6/130_hires.png", stars: "★★★★★" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "FOIL #04 • ANTICO", desc: "Velocità pura: accumula e scarta energie verdi per KO immediati fin dal primo turno!", img: "https://images.pokemontcg.io/sv5/123_hires.png", stars: "★★★★★" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "FOIL #05 • INCOLORE", desc: "Evoca 2 Archeops dal cimitero e attiva 4 energie speciali all'istante per dominare il campo!", img: "https://images.pokemontcg.io/swsh12/139_hires.png", stars: "★★★★☆" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "FOIL #06 • ELETTRO", desc: "Riempi la panchina con Tandem Unit e incassa premi extra sui Pokémon base nemici con Iron Hands!", img: "https://images.pokemontcg.io/sv1/81_hires.png", stars: "★★★★★" }
+    };
+    let activeMaster = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2200);
+    }
+
+    function switchTab(tab) {
+      ['mazzi', 'eventi', 'meta', 'club'].forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        const topBtn = document.getElementById('tab-btn-' + t);
+        const dockBtn = document.getElementById('dock-btn-' + t);
+        
+        if (el) el.classList.add('hidden');
+        if (topBtn) topBtn.className = 'flex-1 py-2 rounded-xl text-slate-400 hover:text-white transition-all text-center';
+        if (dockBtn) dockBtn.className = 'text-slate-400 hover:text-white flex flex-col items-center gap-0.5';
+      });
+
+      const targetEl = document.getElementById('tab-' + tab);
+      const targetTopBtn = document.getElementById('tab-btn-' + tab);
+      const targetDockBtn = document.getElementById('dock-btn-' + tab);
+
+      if (targetEl) targetEl.classList.remove('hidden');
+      if (targetTopBtn) targetTopBtn.className = 'flex-1 py-2 rounded-xl bg-gradient-to-r from-master-gold/25 to-amber-500/25 border border-master-gold/40 text-master-goldLight font-cinzel transition-all text-center';
+      if (targetDockBtn) targetDockBtn.className = 'text-master-goldLight flex flex-col items-center gap-0.5';
+    }
+
+    function openMasterSheet(k) {
+      activeMaster = k;
+      const d = masterDecks[k];
+      document.getElementById('ms-title').innerText = d.title;
+      document.getElementById('ms-badge').innerText = d.badge;
+      document.getElementById('ms-desc').innerText = d.desc;
+      document.getElementById('ms-img').src = d.img;
+      document.getElementById('ms-stars').innerText = d.stars;
+
+      document.getElementById('master-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('master-sheet').classList.add('sheet-open');
+    }
+
+    function closeMasterSheet() {
+      document.getElementById('master-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('master-sheet').classList.remove('sheet-open');
+    }
+
+    function copyMasterCode() {
+      navigator.clipboard.writeText("TCG Live list for " + masterDecks[activeMaster].title);
+      showToast("Decklist copiata con successo! 📋");
+      closeMasterSheet();
+    }
+
+    function authMember() {
+      const e = prompt("Email socio autorizzato:");
+      if (e) showToast("Accesso eseguito per " + e.toUpperCase());
+    }
+  </script>
+</body>
+</html>

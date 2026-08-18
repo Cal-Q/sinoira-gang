@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SINOIRA GANG — Bozza 2: Retro Arcade Dex (Mobile-First)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            sans: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            arcade: {
+              bg: '#0f1115',
+              card: '#1b1f26',
+              accent: '#ff4757',
+              yellow: '#ffa502',
+              cyan: '#2ed573',
+              border: '#2f3542'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0f1115;
+      color: #f1f2f6;
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .retro-btn {
+      box-shadow: 2px 2px 0px #000;
+    }
+    .retro-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px #000;
+    }
+    .bottom-sheet {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sheet-open {
+      transform: translateY(0%) !important;
+    }
+    .custom-scroll::-webkit-scrollbar { display: none; }
+    .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-24 selection:bg-arcade-accent selection:text-white">
+
+  <!-- Mobile Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-arcade-accent text-white border-2 border-black px-4 py-2 text-[10px] font-pixel shadow-2xl flex items-center gap-2 transition-all duration-200 transform translate-y-12 opacity-0 pointer-events-none whitespace-nowrap">
+    <span class="w-1.5 h-1.5 bg-arcade-yellow animate-ping"></span>
+    <span id="toast-msg">CODE COPIED!</span>
+  </div>
+
+  <!-- Mobile Cartridge Top Header -->
+  <header class="sticky top-0 z-40 bg-arcade-bg/95 backdrop-blur-md border-b-2 border-arcade-border px-3.5 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-arcade-accent p-0.5 border border-black retro-btn flex-shrink-0">
+          <img src="/logo.jpg" alt="Logo" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="font-pixel text-xs text-white block leading-none">SINOIRA_GANG</span>
+          <span class="text-[9px] font-mono text-arcade-cyan font-bold">● COMALA LIVE 20:30</span>
+        </div>
+      </div>
+
+      <button onclick="authPrompt()" class="bg-arcade-yellow text-black font-pixel text-[9px] px-2.5 py-1.5 border border-black retro-btn">
+        LOGIN [A]
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-md mx-auto w-full px-3.5 py-3.5 space-y-4">
+
+    <!-- Mobile Mini Hero Banner -->
+    <section class="bg-arcade-card border-2 border-arcade-border p-3.5 rounded-xl retro-btn space-y-2 relative overflow-hidden">
+      <div class="flex justify-between items-center text-[9px] font-pixel text-arcade-yellow">
+        <span>POKÉMON TCG GANG</span>
+        <span class="text-arcade-cyan">FREE 6/6</span>
+      </div>
+
+      <h1 class="font-sans font-black text-xl text-white uppercase leading-tight">
+        CARTE GRATIS <br>
+        <span class="text-arcade-accent">OGNI LUNEDÌ @ COMALA.</span>
+      </h1>
+
+      <p class="text-slate-300 text-xs font-mono">
+        Mazzi pronti in bustina e spiegazione regole per tutti. Zero pay-to-win!
+      </p>
+    </section>
+
+    <!-- Section Header -->
+    <div class="flex justify-between items-center pt-1">
+      <h2 class="font-pixel text-xs text-white uppercase flex items-center gap-1.5">
+        <span class="text-arcade-accent">▶</span> DECK-DEX (6)
+      </h2>
+      <span class="text-[10px] font-mono text-slate-400">TAP TO OPEN</span>
+    </div>
+
+    <!-- 2-COLUMN STRICT MOBILE GRID -->
+    <section class="grid grid-cols-2 gap-2.5">
+      
+      <!-- Card 1 -->
+      <div onclick="openRetro('charizard')" class="bg-arcade-card border-2 border-arcade-border p-2.5 rounded-lg retro-btn cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black/60 border border-arcade-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv3pt5/6_hires.png" alt="Charizard" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-arcade-accent text-white text-[7px] font-pixel px-1 py-0.5">TIER 1</span>
+          </div>
+          <span class="text-[9px] font-mono text-slate-400 font-bold block">#001 • FIRE</span>
+          <h3 class="font-bold text-xs text-white leading-tight">Charizard / Pidgeot</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-arcade-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-arcade-yellow font-bold">PWR 98%</span>
+          <span class="text-arcade-cyan font-bold">OPEN ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div onclick="openRetro('gardevoir')" class="bg-arcade-card border-2 border-arcade-border p-2.5 rounded-lg retro-btn cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black/60 border border-arcade-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv1/86_hires.png" alt="Gardevoir" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-purple-600 text-white text-[7px] font-pixel px-1 py-0.5">COMBO</span>
+          </div>
+          <span class="text-[9px] font-mono text-purple-400 font-bold block">#002 • PSYCHIC</span>
+          <h3 class="font-bold text-xs text-white leading-tight">Gardevoir / Drifloon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-arcade-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-purple-400 font-bold">PWR 95%</span>
+          <span class="text-arcade-cyan font-bold">OPEN ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div onclick="openRetro('dragapult')" class="bg-arcade-card border-2 border-arcade-border p-2.5 rounded-lg retro-btn cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black/60 border border-arcade-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv6/130_hires.png" alt="Dragapult" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-teal-500 text-black text-[7px] font-pixel px-1 py-0.5">SPREAD</span>
+          </div>
+          <span class="text-[9px] font-mono text-teal-400 font-bold block">#003 • DRAGON</span>
+          <h3 class="font-bold text-xs text-white leading-tight">Dragapult / Dusknoir</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-arcade-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-teal-400 font-bold">PWR 97%</span>
+          <span class="text-arcade-cyan font-bold">OPEN ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div onclick="openRetro('ragingbolt')" class="bg-arcade-card border-2 border-arcade-border p-2.5 rounded-lg retro-btn cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black/60 border border-arcade-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv5/123_hires.png" alt="Raging Bolt" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-amber-500 text-black text-[7px] font-pixel px-1 py-0.5">AGGRO</span>
+          </div>
+          <span class="text-[9px] font-mono text-amber-400 font-bold block">#004 • ANCIENT</span>
+          <h3 class="font-bold text-xs text-white leading-tight">Raging Bolt / Ogerpon</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-arcade-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-amber-400 font-bold">PWR 99%</span>
+          <span class="text-arcade-cyan font-bold">OPEN ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div onclick="openRetro('lugia')" class="bg-arcade-card border-2 border-arcade-border p-2.5 rounded-lg retro-btn cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black/60 border border-arcade-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/swsh12/139_hires.png" alt="Lugia" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-blue-500 text-white text-[7px] font-pixel px-1 py-0.5">VSTAR</span>
+          </div>
+          <span class="text-[9px] font-mono text-blue-400 font-bold block">#005 • TURBO</span>
+          <h3 class="font-bold text-xs text-white leading-tight">Lugia / Archeops</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-arcade-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-blue-400 font-bold">PWR 92%</span>
+          <span class="text-arcade-cyan font-bold">OPEN ➔</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div onclick="openRetro('miraidon')" class="bg-arcade-card border-2 border-arcade-border p-2.5 rounded-lg retro-btn cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="aspect-square bg-black/60 border border-arcade-border p-1.5 flex items-center justify-center relative mb-2">
+            <img src="https://images.pokemontcg.io/sv1/81_hires.png" alt="Miraidon" class="h-full object-contain">
+            <span class="absolute top-1 left-1 bg-yellow-400 text-black text-[7px] font-pixel px-1 py-0.5">PRIZE+</span>
+          </div>
+          <span class="text-[9px] font-mono text-yellow-400 font-bold block">#006 • ELECTRIC</span>
+          <h3 class="font-bold text-xs text-white leading-tight">Miraidon / Hands</h3>
+        </div>
+        <div class="mt-2 pt-1.5 border-t border-arcade-border flex justify-between items-center text-[10px] font-mono">
+          <span class="text-yellow-400 font-bold">PWR 94%</span>
+          <span class="text-arcade-cyan font-bold">OPEN ➔</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Mobile Comala Schedule -->
+    <section class="bg-arcade-card border-2 border-arcade-border p-3 rounded-lg space-y-2 font-mono text-xs">
+      <div class="flex justify-between items-center text-arcade-yellow font-bold border-b border-arcade-border pb-1">
+        <span>AGENDA @ COMALA</span>
+        <span class="text-arcade-cyan font-pixel text-[8px]">ACTIVE</span>
+      </div>
+      <div class="space-y-1 text-[11px] text-slate-300">
+        <div><strong class="text-white">Lunedì 20:30:</strong> Pokémon TCG Free Play</div>
+        <div><strong class="text-white">Mercoledì 21:00:</strong> Smash Bros Night</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Arcade Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-arcade-card/95 backdrop-blur-md border-t-2 border-arcade-border py-2 px-6">
+    <div class="max-w-md mx-auto flex items-center justify-between text-xs font-pixel">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-1 text-arcade-accent">
+        <span class="text-sm">🎮</span>
+        <span class="text-[8px]">DEX</span>
+      </button>
+      <button onclick="showToast('Comala: Corso Ferrucci 65/a, Torino')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white">
+        <span class="text-sm">📍</span>
+        <span class="text-[8px]">COMALA</span>
+      </button>
+      <button onclick="showToast('Standard Format [F][G][H] Active')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white">
+        <span class="text-sm">⚡</span>
+        <span class="text-[8px]">META</span>
+      </button>
+      <button onclick="showToast('Sinoira Gang: Torino Casual Club')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white">
+        <span class="text-sm">👾</span>
+        <span class="text-[8px]">CLUB</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Slide-up Retro Drawer -->
+  <div id="retro-overlay" onclick="closeRetro()" class="fixed inset-0 z-50 bg-black/70 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
+  <div id="retro-sheet" class="fixed bottom-0 left-0 right-0 z-50 bg-arcade-card border-t-4 border-arcade-accent max-w-md mx-auto p-4 space-y-3 font-mono transform translate-y-full bottom-sheet">
+    <div class="flex justify-between items-center border-b border-arcade-border pb-2">
+      <span id="rs-badge" class="font-pixel text-[9px] text-arcade-cyan">TIER 1</span>
+      <button onclick="closeRetro()" class="bg-arcade-accent text-white font-pixel text-[9px] px-2 py-0.5 border border-black">X</button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img id="rs-img" src="" class="w-16 bg-black p-1 border border-arcade-border">
+      <div>
+        <h3 id="rs-title" class="font-sans font-black text-sm text-white uppercase">Title</h3>
+        <p id="rs-desc" class="text-[11px] text-slate-300 mt-1 leading-snug">Descrizione...</p>
+      </div>
+    </div>
+
+    <button onclick="copyRetroCode()" class="w-full bg-arcade-accent hover:bg-red-500 text-white font-pixel text-[10px] py-2.5 border-2 border-black retro-btn uppercase tracking-wider">
+      📋 COPIA LISTA TCG LIVE
+    </button>
+  </div>
+
+  <script>
+    const rDecks = {
+      charizard: { title: "Charizard ex / Pidgeot", badge: "TIER 1 • FIRE", desc: "Motore infallibile con Quick Search. Charizard scala 30 danni in più per premio!", img: "https://images.pokemontcg.io/sv3pt5/6_hires.png" },
+      gardevoir: { title: "Gardevoir ex / Drifloon", badge: "TIER 1 • PSYCHIC", desc: "Rianima energie infinite dal cimitero e tira colpi da 360 danni!", img: "https://images.pokemontcg.io/sv1/86_hires.png" },
+      dragapult: { title: "Dragapult ex / Dusknoir", badge: "TIER 1 • DRAGON", desc: "200 danni attivi + 60 danni cecchino a piacere sulla panchina!", img: "https://images.pokemontcg.io/sv6/130_hires.png" },
+      ragingbolt: { title: "Raging Bolt / Ogerpon", badge: "TIER 1 • ANCIENT", desc: "Attacca fin dal primo turno scartando energie per danni illimitati!", img: "https://images.pokemontcg.io/sv5/123_hires.png" },
+      lugia: { title: "Lugia VSTAR / Turbo", badge: "VSTAR • TURBO", desc: "Evoca 2 Archeops dal cimitero e carica 4 energie speciali in un secondo!", img: "https://images.pokemontcg.io/swsh12/139_hires.png" },
+      miraidon: { title: "Miraidon ex / Hands", badge: "AMP • ELECTRIC", desc: "Prendi 2 premi sui piccoli Pokémon base con Amp You Very Much!", img: "https://images.pokemontcg.io/sv1/81_hires.png" }
+    };
+    let activeR = "charizard";
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none'), 2000);
+    }
+
+    function openRetro(k) {
+      activeR = k;
+      const d = rDecks[k];
+      document.getElementById('rs-title').innerText = d.title;
+      document.getElementById('rs-badge').innerText = d.badge;
+      document.getElementById('rs-desc').innerText = d.desc;
+      document.getElementById('rs-img').src = d.img;
+      document.getElementById('retro-overlay').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('retro-sheet').classList.add('sheet-open');
+    }
+
+    function closeRetro() {
+      document.getElementById('retro-overlay').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('retro-sheet').classList.remove('sheet-open');
+    }
+
+    function copyRetroCode() {
+      navigator.clipboard.writeText("TCG Live String for " + rDecks[activeR].title);
+      showToast("CODE COPIATO!");
+      closeRetro();
+    }
+
+    function authPrompt() {
+      const e = prompt("Email socio:");
+      if (e) showToast("LOGIN OK: " + e.toUpperCase());
+    }
+  </script>
+</body>
+</html>
